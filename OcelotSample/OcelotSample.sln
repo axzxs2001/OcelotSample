@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotGateway", "OcelotGateway\OcelotGateway.csproj", "{B635DB1F-DCAF-48A7-8720-0F66E0EB96A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotGateway", "OcelotGateway\OcelotGateway.csproj", "{B635DB1F-DCAF-48A7-8720-0F66E0EB96A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.JWTAuthorizePolicy", "Ocelot.JWTAuthorizePolicy\Ocelot.JWTAuthorizePolicy.csproj", "{5A796B21-7371-4CC0-9400-881EE09315C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationAPI", "AuthenticationAPI\AuthenticationAPI.csproj", "{5CEDB9F5-0700-4F55-BA82-B132B7D4990D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LisAPI", "LisAPI\LisAPI.csproj", "{C82D07B1-3C8F-456D-8F42-3ED0451C1480}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HisAPI", "HisAPI\HisAPI.csproj", "{45DE861E-C1EA-47BF-9427-F61000C70B27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

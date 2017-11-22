@@ -5,17 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LisAPI.Controllers
+namespace HisAPI.Controllers
 {
-    [Authorize("Permission")]
-    [Route("lisapi/[controller]")]
-    public class LisUserController : Controller
+    [Route("hisapi/[controller]")]
+    public class HisUserController : Controller
     {
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Lis用户服务", "保存用户" };
+            return new string[] { "His用户服务", "请求用户" };
         }
 
         // GET api/values/5
@@ -50,11 +49,8 @@ namespace LisAPI.Controllers
             return new JsonResult(new
             {
                 Status = false,
-                Message = "Lis你无权限访问"
+                Message = "His你无权限访问"
             });
         }
     }
 }
-
-
-
