@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace Ocelot.JWTAuthorizePolicy
@@ -49,5 +51,80 @@ namespace Ocelot.JWTAuthorizePolicy
                  opt.TokenValidationParameters = tokenValidationParameters;
              });
         }
+
+
+        public static AuthenticationBuilder AddOcelotPolicyJwtBearer(this IServiceCollection services, string issuer, string audience, string secret, string defaultScheme, string policyName, string deniedUrl, bool isHttps = false)
+        {
+
+            var keyByteArray = Encoding.ASCII.GetBytes(secret);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = issuer,//发行人
+                ValidateAudience = true,
+                ValidAudience = audience,//订阅人
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                RequireExpirationTime = true,
+
+            };
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            //如果第三个参数，是ClaimTypes.Role，上面集合的每个元素的Name为角色名称，如果ClaimTypes.Name，即上面集合的每个元素的Name为用户名
+            var permissionRequirement = new PermissionRequirement(
+               deniedUrl,
+                ClaimTypes.Role,
+                issuer,
+                audience,
+                signingCredentials,
+                expiration: TimeSpan.FromHours(10)
+                );
+            //注入授权Handler
+            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+            services.AddSingleton(permissionRequirement);
+            return services.AddAuthorization(options =>
+            {
+                options.AddPolicy(policyName,
+                          policy => policy.Requirements.Add(permissionRequirement));
+
+            })
+         .AddAuthentication(options =>
+         {
+             options.DefaultScheme = defaultScheme;
+         })
+         .AddJwtBearer(defaultScheme, o =>
+         {
+             //不使用https
+             o.RequireHttpsMetadata = isHttps;
+             o.TokenValidationParameters = tokenValidationParameters;
+         });
+        }
+        /// <summary>
+        /// 注放Token生成器参数
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
+        /// <param name="issuer">发行人</param>
+        /// <param name="audience">订阅人</param>
+        /// <param name="secret">密钥</param>
+        /// <param name="deniedUrl">拒绝路由</param>
+        /// <returns></returns>
+        public static IServiceCollection AddJTokenBuild(this IServiceCollection services, string issuer, string audience, string secret,  string deniedUrl)
+        {
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)), SecurityAlgorithms.HmacSha256);
+            //如果第三个参数，是ClaimTypes.Role，上面集合的每个元素的Name为角色名称，如果ClaimTypes.Name，即上面集合的每个元素的Name为用户名
+            var permissionRequirement = new PermissionRequirement(
+               deniedUrl,
+                ClaimTypes.Role,
+                issuer,
+                audience,
+                signingCredentials,
+                expiration: TimeSpan.FromHours(10)
+                );
+            return services.AddSingleton(permissionRequirement);
+
+        }
+
     }
 }
