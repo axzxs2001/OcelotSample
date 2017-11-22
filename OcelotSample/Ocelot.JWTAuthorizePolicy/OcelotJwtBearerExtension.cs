@@ -15,7 +15,7 @@ namespace Ocelot.JWTAuthorizePolicy
     public static class OcelotJwtBearerExtension
     {
         /// <summary>
-        /// 注入Ocelot下JwtBearer
+        /// 注入Ocelot下JwtBearer，在ocelot网关的Startup的ConfigureServices中调用
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <param name="issuer">发行人</param>
@@ -52,7 +52,18 @@ namespace Ocelot.JWTAuthorizePolicy
              });
         }
 
-
+        /// <summary>
+        /// 注入Ocelot jwt策略，在业务API应用中的Startup的ConfigureServices调用
+        /// </summary>
+        /// <param name="services">IServiceCollection</param>
+        /// <param name="issuer">发行人</param>
+        /// <param name="audience">订阅人</param>
+        /// <param name="secret">密钥</param>
+        /// <param name="defaultScheme">默认架构</param>
+        /// <param name="policyName">自定义策略名称</param>
+        /// <param name="deniedUrl">拒绝路由</param>
+        /// <param name="isHttps">是否https</param>
+        /// <returns></returns>
         public static AuthenticationBuilder AddOcelotPolicyJwtBearer(this IServiceCollection services, string issuer, string audience, string secret, string defaultScheme, string policyName, string deniedUrl, bool isHttps = false)
         {
 
@@ -102,7 +113,7 @@ namespace Ocelot.JWTAuthorizePolicy
          });
         }
         /// <summary>
-        /// 注放Token生成器参数
+        /// 注放Token生成器参数，在token生成项目的Startup的ConfigureServices中使用
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <param name="issuer">发行人</param>
