@@ -14,6 +14,7 @@ namespace OcelotGateway
     {
         public static void Main(string[] args)
         {
+            Console.Title = "OcelotGateway";
             IWebHostBuilder builder = new WebHostBuilder();
             builder.ConfigureServices(service =>
             {

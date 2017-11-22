@@ -23,11 +23,11 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/denied",
+      "DownstreamPathTemplate": "/lisapi/denied",
       "DownstreamScheme": "http",
       "DownstreamPort": 5002,
       "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/api/denied",
+      "UpstreamPathTemplate": "/lisapi/denied",
       "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -49,61 +49,37 @@
         "DurationOfBreak": 10,
         "TimeoutValue": 5000
       },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GSWBearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/hisapi/denied",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5001,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/hisapi/denied",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
       "AuthenticationOptions": {
       }
     },
     {
       "DownstreamPathTemplate": "/authapi/login",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5003,
+      "DownstreamPort": 5002,
       "DownstreamHost": "localhost",
       "UpstreamPathTemplate": "/authapi/login",
       "UpstreamHttpMethod": [ "Get", "Post" ],
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 10,
-        "TimeoutValue": 5000
-      },
-      "AuthenticationOptions": {
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/home/index",
-      "DownstreamScheme": "http",
-      "DownstreamPort": 5004,
-      "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/home/index",
-      "UpstreamHttpMethod": [ "Get", "Post" ],
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 10,
-        "TimeoutValue": 5000
-      },
-      "AuthenticationOptions": {
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/css/site.css",
-      "DownstreamScheme": "http",
-      "DownstreamPort": 5004,
-      "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/css/site.css",
-      "UpstreamHttpMethod": [ "Get" ],
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 10,
-        "TimeoutValue": 5000
-      },
-      "AuthenticationOptions": {
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/images/banner1.svg",
-      "DownstreamScheme": "http",
-      "DownstreamPort": 5004,
-      "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/images/banner1.svg",
-      "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,

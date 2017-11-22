@@ -14,6 +14,7 @@ namespace LisAPI
     {
         public static void Main(string[] args)
         {
+            Console.Title = "ListAPI";
             BuildWebHost(args).Run();
         }
 

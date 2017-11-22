@@ -21,9 +21,10 @@ namespace AuthenticationAPI
         }
         [AllowAnonymous]
         [HttpPost("/authapi/login")]
-        public IActionResult Login(string username, string password, string role)
+        public IActionResult Login(string username, string password)
         {
-            var isValidated = username == "gsw" && password == "111111";
+            var isValidated = (username == "gsw" && password == "111111")|| (username == "ggg" && password == "222222");
+            var role=username=="gsw"?"admin" :"system";
             if (!isValidated)
             {
                 return new JsonResult(new

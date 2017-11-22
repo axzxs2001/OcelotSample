@@ -14,6 +14,7 @@ namespace HisAPI
     {
         public static void Main(string[] args)
         {
+            Console.Title = "HisAPI";
             BuildWebHost(args).Run();
         }
 

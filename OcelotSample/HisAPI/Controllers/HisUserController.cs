@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HisAPI.Controllers
 {
+    [Authorize("Permission")]
     [Route("hisapi/[controller]")]
     public class HisUserController : Controller
     {
@@ -43,7 +44,7 @@ namespace HisAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("/api/denied")]
+        [HttpGet("/hisapi/denied")]
         public IActionResult Denied()
         {
             return new JsonResult(new

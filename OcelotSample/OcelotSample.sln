@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LisAPI", "LisAPI\LisAPI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HisAPI", "HisAPI\HisAPI.csproj", "{45DE861E-C1EA-47BF-9427-F61000C70B27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{2387BB0B-FF12-41C2-80B9-5ADE13D90988}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45DE861E-C1EA-47BF-9427-F61000C70B27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2387BB0B-FF12-41C2-80B9-5ADE13D90988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2387BB0B-FF12-41C2-80B9-5ADE13D90988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2387BB0B-FF12-41C2-80B9-5ADE13D90988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2387BB0B-FF12-41C2-80B9-5ADE13D90988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

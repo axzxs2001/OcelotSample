@@ -14,6 +14,7 @@ namespace AuthenticationAPI
     {
         public static void Main(string[] args)
         {
+            Console.Title = "AuthenticationAPI";
             BuildWebHost(args).Run();
         }
 

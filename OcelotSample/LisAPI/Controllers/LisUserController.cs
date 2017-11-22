@@ -44,7 +44,7 @@ namespace LisAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("/api/denied")]
+        [HttpGet("/lisapi/denied")]
         public IActionResult Denied()
         {
             return new JsonResult(new
