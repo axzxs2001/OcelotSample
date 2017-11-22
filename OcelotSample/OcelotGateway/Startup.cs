@@ -19,7 +19,7 @@ namespace OcelotGateway
     {
         public Startup(IHostingEnvironment environment)
         {
-            var builder = new ConfigurationBuilder();
+            var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
             builder.SetBasePath(environment.ContentRootPath)
                    .AddJsonFile("appsettings.json", false, reloadOnChange: true)
                    .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: false, reloadOnChange: true)

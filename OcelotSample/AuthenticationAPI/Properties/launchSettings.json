@@ -8,17 +8,9 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/Permission",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "AuthorizePolicy.JWT.Test": {
+    "AuthenticationAPI": {
+      "launchBrowser": false,
       "commandName": "Project",
-      "launchUrl": "api/Permission",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

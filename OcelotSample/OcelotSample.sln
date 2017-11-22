@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.JWTAuthorizePolicy",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationAPI", "AuthenticationAPI\AuthenticationAPI.csproj", "{5CEDB9F5-0700-4F55-BA82-B132B7D4990D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LisAPI", "LisAPI\LisAPI.csproj", "{C82D07B1-3C8F-456D-8F42-3ED0451C1480}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5CEDB9F5-0700-4F55-BA82-B132B7D4990D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CEDB9F5-0700-4F55-BA82-B132B7D4990D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CEDB9F5-0700-4F55-BA82-B132B7D4990D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C82D07B1-3C8F-456D-8F42-3ED0451C1480}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
