@@ -10,6 +10,7 @@ Ocelot的测试项目。
 
 ## Ocelot网关
 ##### Program.cs
+
     public class Program
     {
         public static void Main(string[] args)
@@ -30,7 +31,8 @@ Ocelot的测试项目。
         }      
     }
 ##### Startup.cs
- public class Startup
+
+    public class Startup
     {
         public Startup(IHostingEnvironment environment)
         {
@@ -69,9 +71,10 @@ Ocelot的测试项目。
         }
     }
     
-    ## 分发Token
-        public class Startup
-    {
+## 分发Token项目
+
+        public class Startup
+        {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -94,7 +97,7 @@ Ocelot的测试项目。
         }
     }
     
-    ## 业务项目
+## 业务项目
       public class Startup
     {
         public Startup(IConfiguration configuration)
