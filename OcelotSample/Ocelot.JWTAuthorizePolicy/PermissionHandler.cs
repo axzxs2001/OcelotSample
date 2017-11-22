@@ -64,10 +64,12 @@ namespace Ocelot.JWTAuthorizePolicy
                     {
                         var name = httpContext.User.Claims.SingleOrDefault(s => s.Type == requirement.ClaimType).Value;
                         //验证权限
-                        if (_permissions.Where(w => w.Name == name && w.Url.ToLower() == questUrl).Count() <= 0)
+                        if (_permissions.Where(w => w.Name == name && w.Url.ToLower() == questUrl).Count() == 0)
                         {
-                            //无权限跳转到拒绝页面
+                            //无权限跳转到拒绝页面   
                             httpContext.Response.Redirect(requirement.DeniedAction);
+                            context.Succeed(requirement);
+                            return;
                         }
                     }
                     //判断过期时间
