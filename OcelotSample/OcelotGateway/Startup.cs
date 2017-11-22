@@ -8,33 +8,53 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ocelot.Middleware;
+using Ocelot.JWTAuthorizePolicy;
+using Ocelot.DependencyInjection;
+using CacheManager.Core;
 
 namespace OcelotGateway
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment environment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder();
+            builder.SetBasePath(environment.ContentRootPath)
+                   .AddJsonFile("appsettings.json", false, reloadOnChange: true)
+                   .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: false, reloadOnChange: true)
+                   //添加ocelot配置文件
+                   .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
+                   .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
+        public IConfigurationRoot Configuration { get; }
 
-        public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            var audienceConfig = Configuration.GetSection("Audience");
+            //注入OcelotJwtBearer
+            services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
+
+            //注放Ocelot
+            services.AddOcelot(Configuration, (x) =>
+            {
+                x.WithMicrosoftLogging(log =>
+                {
+                    log.AddConsole(LogLevel.Debug);
+                }).WithDictionaryHandle();
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+            await app.UseOcelot();
         }
     }
 }

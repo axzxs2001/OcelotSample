@@ -1,0 +1,116 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/lisapi/lisuser",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5002,
+      "UpstreamPathTemplate": "/lisapi/lisuser",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ReRouteIsCaseSensitive": false,
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GSWBearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/denied",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5002,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/api/denied",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/hisapi/hisuser",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5001,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/hisapi/hisuser",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/authapi/login",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5003,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/authapi/login",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/home/index",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5004,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/home/index",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/css/site.css",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5004,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/css/site.css",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/images/banner1.svg",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5004,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/images/banner1.svg",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    }
+  ]
+}

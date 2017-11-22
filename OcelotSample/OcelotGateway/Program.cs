@@ -7,19 +7,26 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Extensions.DependencyInjection;
 namespace OcelotGateway
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            IWebHostBuilder builder = new WebHostBuilder();
+            builder.ConfigureServices(service =>
+            {
+                service.AddSingleton(builder);
+            });
+            builder.UseKestrel()
+                   .UseContentRoot(Directory.GetCurrentDirectory())
+                   .UseIISIntegration()
+                   .UseStartup<Startup>()
+                   .UseApplicationInsights();
+            var host = builder.Build();
+            host.Run();
         }
-
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+      
     }
 }
