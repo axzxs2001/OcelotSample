@@ -76,7 +76,7 @@
     {
       "DownstreamPathTemplate": "/authapi/login",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5002,
+      "DownstreamPort": 5003,
       "DownstreamHost": "localhost",
       "UpstreamPathTemplate": "/authapi/login",
       "UpstreamHttpMethod": [ "Get", "Post" ],

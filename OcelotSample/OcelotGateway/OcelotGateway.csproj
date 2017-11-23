@@ -21,4 +21,10 @@
     <ProjectReference Include="..\Ocelot.JWTAuthorizePolicy\Ocelot.JWTAuthorizePolicy.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="configuration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
