@@ -23,6 +23,7 @@ namespace OcelotGateway
             builder.UseKestrel()
                    .UseContentRoot(Directory.GetCurrentDirectory())
                    .UseIISIntegration()
+                   .UseUrls("http://*:5000")
                    .UseStartup<Startup>()
                    .UseApplicationInsights();
             var host = builder.Build();

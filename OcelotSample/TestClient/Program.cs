@@ -13,14 +13,15 @@ namespace TestClient
         /// <summary>
         /// 访问Url
         /// </summary>
-        static string _url = "http://localhost:5000";
+        static string _url = "http://127.0.0.1:5000";
         static void Main(string[] args)
         {
+
             Console.Title = "TestClient";
             dynamic token = null;
             while (true)
             {
-                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询HisUser数据  5、查询LisUser数据");
+                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询HisUser数据  5、查询LisUser数据 6、用system登录后的压力测试");
                 var mark = Console.ReadLine();
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -41,13 +42,17 @@ namespace TestClient
                     case "5":
                         LisUser(token);
                         break;
+                    case "6":
+                        WebHisUser(token);
+                        break;
                 }
                 stopwatch.Stop();
                 TimeSpan timespan = stopwatch.Elapsed;
                 Console.WriteLine($"间隔时间：{timespan.TotalSeconds}");
+                tokenString = "Bearer " + Convert.ToString(token?.access_token);
             }
         }
-
+        static string tokenString = "";
         static dynamic NullLogin()
         {
             var loginClient = new RestClient(_url);
@@ -61,12 +66,13 @@ namespace TestClient
             Console.WriteLine(loginContent);
             return Newtonsoft.Json.JsonConvert.DeserializeObject(loginContent);
         }
+
         static dynamic SystemLogin()
         {
             var loginClient = new RestClient(_url);
             var loginRequest = new RestRequest("/authapi/login", Method.POST);
             loginRequest.AddParameter("username", "ggg");
-            loginRequest.AddParameter("password", "222222");        
+            loginRequest.AddParameter("password", "222222");
             IRestResponse loginResponse = loginClient.Execute(loginRequest);
             var loginContent = loginResponse.Content;
             Console.WriteLine(loginContent);
@@ -77,7 +83,7 @@ namespace TestClient
             var loginClient = new RestClient(_url);
             var loginRequest = new RestRequest("/authapi/login", Method.POST);
             loginRequest.AddParameter("username", "gsw");
-            loginRequest.AddParameter("password", "111111");      
+            loginRequest.AddParameter("password", "111111");
             IRestResponse loginResponse = loginClient.Execute(loginRequest);
             var loginContent = loginResponse.Content;
             Console.WriteLine(loginContent);
@@ -104,5 +110,42 @@ namespace TestClient
             IRestResponse response = client.Execute(request);
             var content = response.Content; Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
         }
+
+        static void WebHisUser(dynamic token)
+        {
+            count = 0;
+            Console.Title = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff");
+            for (int i = 0; i < 1000; i++)
+            {
+                new System.Threading.Thread(Exec).Start(tokenString);
+            }
+        }
+        static int count = 0;
+        static object oo = new Object();
+        static void Exec(object obj)
+        {
+            var client = new RestClient(_url);
+            //这里要在获取的令牌字符串前加Bearer
+            string tk = obj.ToString();
+            client.AddDefaultHeader("Authorization", tk);
+            client.Timeout = 3000;
+            var request = new RestRequest("/hisapi/hisuser", Method.GET);
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            if ((int)response.StatusCode == 200)
+            {
+                lock (oo)
+                {
+                    count++;
+                }               
+            }
+            if (count >= 1000)
+            {
+                Console.WriteLine($"{count} --总时间：{ (DateTime.Now - Convert.ToDateTime(Console.Title)).TotalMilliseconds}");
+            }
+        }
     }
+
 }

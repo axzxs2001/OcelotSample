@@ -27,6 +27,7 @@ namespace AuthenticationAPI
                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                    config.AddEnvironmentVariables();
                })
+            .UseUrls("http://*:5003")
                 .UseStartup<Startup>()
                 .Build();
     }

@@ -42,7 +42,7 @@ namespace OcelotGateway
             {
                 x.WithMicrosoftLogging(log =>
                 {
-                    log.AddConsole(LogLevel.Debug);
+                    //log.AddConsole(LogLevel.Debug);
                 }).WithDictionaryHandle();
             });
         }

@@ -23,7 +23,7 @@ namespace HisAPI
 
 
         public void ConfigureServices(IServiceCollection services)
-        { 
+        {  
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
             services.AddOcelotPolicyJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer", "Permission", "/hisapi/denied");
