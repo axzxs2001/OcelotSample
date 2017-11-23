@@ -38,13 +38,7 @@ namespace OcelotGateway
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
 
             //注放Ocelot
-            services.AddOcelot(Configuration, (x) =>
-            {
-                x.WithMicrosoftLogging(log =>
-                {
-                    //log.AddConsole(LogLevel.Debug);
-                }).WithDictionaryHandle();
-            });
+            services.AddOcelot(Configuration);
         }
 
 
