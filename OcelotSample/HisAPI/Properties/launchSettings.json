@@ -7,18 +7,11 @@
       "sslPort": 0
     }
   },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/product",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
+  "profiles": {  
     "HisAPI": {
       "commandName": "Project",
-      "launchUrl": "api/product",
+      "launchBrowser": false,
+      "launchUrl": "hisapi/hisuser",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 using Ocelot.Middleware;
 using Ocelot.JWTAuthorizePolicy;
 using Ocelot.DependencyInjection;
-using CacheManager.Core;
+
+using App.Metrics;
+using App.Metrics.Reporting.Interfaces;
+using App.Metrics.Extensions.Reporting.InfluxDB;
+using App.Metrics.Extensions.Reporting.InfluxDB.Client;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace OcelotGateway
 {
@@ -33,6 +34,31 @@ namespace OcelotGateway
 
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Metrics监控部分，不用可注释掉
+            var database = "test";
+            var uri = new Uri("http://127.0.0.1:8086");
+            services.AddMetrics(options =>
+            {
+                options.GlobalTags.Add("app", "sample app");
+                options.GlobalTags.Add("env", "stage");
+            })
+               .AddHealthChecks()
+
+               .AddReporting(
+                  factory =>
+                  {
+                      factory.AddInfluxDb(
+                new InfluxDBReporterSettings
+                {
+                    InfluxDbSettings = new InfluxDBSettings(database, uri),
+                    ReportInterval = TimeSpan.FromSeconds(5)
+                });
+                  })
+               .AddMetricsMiddleware(options => options.IgnoredHttpStatusCodes = new[] { 404 });
+
+            #endregion
+
+
             var audienceConfig = Configuration.GetSection("Audience");
             //注入OcelotJwtBearer
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
@@ -42,8 +68,13 @@ namespace OcelotGateway
         }
 
 
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
+            #region Metrics监控部分，不用可注释掉
+            app.UseMetrics();
+            app.UseMetricsReporting(lifetime);
+            #endregion
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
