@@ -95,7 +95,10 @@ namespace TestClient
             //这里要在获取的令牌字符串前加Bearer
             string tk = "Bearer " + Convert.ToString(token?.access_token);
             client.AddDefaultHeader("Authorization", tk);
-            var request = new RestRequest("/hisapi/hisuser", Method.GET);
+            var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
+            var radom = new Random();
+            var index = radom.Next(0, 15);
+            request.AddParameter("name", arr[index]);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
             Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
@@ -115,36 +118,52 @@ namespace TestClient
         {
             count = 0;
             Console.Title = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff");
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 new System.Threading.Thread(Exec).Start(tokenString);
             }
         }
         static int count = 0;
         static object oo = new Object();
+
+        static string[] arr = new string[] { "直", "天", "大", "三", "a", "c", "z", "s" ,"k","j","b","e","f","h","i"};
         static void Exec(object obj)
         {
             var client = new RestClient(_url);
             //这里要在获取的令牌字符串前加Bearer
             string tk = obj.ToString();
             client.AddDefaultHeader("Authorization", tk);
-            client.Timeout = 3000;
-            var request = new RestRequest("/hisapi/hisuser", Method.GET);
-
+            client.Timeout = 30000;
+            var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
+            var radom = new Random();
+            var index=radom.Next(0, 15);
+            request.AddParameter("name", arr[index]);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+            Console.WriteLine(DateTime.Now+"         返回状态：" +(int)response.StatusCode +"\r\n"+content);
+            //if ((int)response.StatusCode == 200)
+            //{
+            //    lock (oo)
+            //    {
+            //        count++;
+            //    }
+            //}
+            //if (count >= 100)
+            //{
+            //    Console.WriteLine($"{count} --总时间：{ (DateTime.Now - Convert.ToDateTime(Console.Title)).TotalMilliseconds}");
+            //}
+        }
 
-            if ((int)response.StatusCode == 200)
-            {
-                lock (oo)
-                {
-                    count++;
-                }               
-            }
-            if (count >= 1000)
-            {
-                Console.WriteLine($"{count} --总时间：{ (DateTime.Now - Convert.ToDateTime(Console.Title)).TotalMilliseconds}");
-            }
+        public static void GetFeeItem(dynamic token)
+        {
+            var client = new RestClient(_url);
+            //这里要在获取的令牌字符串前加Bearer
+            string tk = "Bearer " + Convert.ToString(token?.access_token);
+            client.AddDefaultHeader("Authorization", tk);
+            var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
         }
     }
 

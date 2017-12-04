@@ -59,6 +59,27 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/hisapi/getfeeitems",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5001,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/hisapi/getfeeitems",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 50000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GSWBearer",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/hisapi/denied",
       "DownstreamScheme": "http",
       "DownstreamPort": 5001,

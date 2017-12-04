@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using HisAPI.Model.Repository;
 
 namespace HisAPI.Controllers
 {
@@ -11,6 +12,11 @@ namespace HisAPI.Controllers
     [Route("hisapi/[controller]")]
     public class HisUserController : Controller
     {
+        IFeeItemRepository _feeItemRepository;
+        public HisUserController(IFeeItemRepository feeItemRepository)
+        {
+            _feeItemRepository = feeItemRepository;
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -52,6 +58,26 @@ namespace HisAPI.Controllers
                 Status = false,
                 Message = "His你无权限访问"
             });
+        }
+
+
+    }
+
+
+
+    [Authorize("Permission")]
+    public class FeeItemController : Controller
+    {
+        IFeeItemRepository _feeItemRepository;
+        public FeeItemController(IFeeItemRepository feeItemRepository)
+        {
+            _feeItemRepository = feeItemRepository;
+        }
+        [HttpGet("/hisapi/getfeeitems")]
+        public IActionResult GetFeeItem(string name)
+        {
+            var list = _feeItemRepository.GetFeeItems(name);
+            return new JsonResult(list);
         }
     }
 }

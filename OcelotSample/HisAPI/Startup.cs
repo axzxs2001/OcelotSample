@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ocelot.JWTAuthorizePolicy;
+using System.Data;
+using System.Data.SqlClient;
+using HisAPI.Model.Repository;
+using HisAPI.Model.DataModel;
 
 namespace HisAPI
 {
@@ -34,6 +38,12 @@ namespace HisAPI
                               new Permission {  Url="/", Name="system"}
                           };
             services.AddSingleton(permission);
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddSingleton(connectionString);
+            //sqlieconnection注放
+            services.AddScoped<IDbConnection, SqlConnection>();
+            services.AddScoped<IHisDB, HisDB>();
+            services.AddScoped<IFeeItemRepository, FeeItemRepository>();
             services.AddMvc();
         }
 
