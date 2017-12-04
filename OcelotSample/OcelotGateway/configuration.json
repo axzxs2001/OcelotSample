@@ -68,7 +68,7 @@
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
-        "TimeoutValue": 50000
+        "TimeoutValue": 300000
       },
       "HttpHandlerOptions": {
         "AllowAutoRedirect": false,

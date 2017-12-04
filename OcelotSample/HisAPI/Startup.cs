@@ -38,6 +38,7 @@ namespace HisAPI
                               new Permission {  Url="/", Name="system"}
                           };
             services.AddSingleton(permission);
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddSingleton(connectionString);
             //sqlieconnection注放

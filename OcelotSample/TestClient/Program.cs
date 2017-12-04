@@ -97,7 +97,7 @@ namespace TestClient
             client.AddDefaultHeader("Authorization", tk);
             var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
             var radom = new Random();
-            var index = radom.Next(0, 15);
+            var index = radom.Next(0, 36);
             request.AddParameter("name", arr[index]);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
@@ -118,7 +118,7 @@ namespace TestClient
         {
             count = 0;
             Console.Title = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff");
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 new System.Threading.Thread(Exec).Start(tokenString);
             }
@@ -126,32 +126,32 @@ namespace TestClient
         static int count = 0;
         static object oo = new Object();
 
-        static string[] arr = new string[] { "直", "天", "大", "三", "a", "c", "z", "s" ,"k","j","b","e","f","h","i"};
+        static string[] arr = new string[] { "直", "天", "大", "三", "小","阿","素","理","甲","黄","a","b" ,"c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u", "v", "w" ,"x","y","z"};
         static void Exec(object obj)
         {
             var client = new RestClient(_url);
             //这里要在获取的令牌字符串前加Bearer
             string tk = obj.ToString();
             client.AddDefaultHeader("Authorization", tk);
-            client.Timeout = 30000;
+            client.Timeout = 300000;
             var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
             var radom = new Random();
-            var index=radom.Next(0, 15);
+            var index=radom.Next(0, 36);
             request.AddParameter("name", arr[index]);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
-            Console.WriteLine(DateTime.Now+"         返回状态：" +(int)response.StatusCode +"\r\n"+content);
-            //if ((int)response.StatusCode == 200)
-            //{
-            //    lock (oo)
-            //    {
-            //        count++;
-            //    }
-            //}
-            //if (count >= 100)
-            //{
-            //    Console.WriteLine($"{count} --总时间：{ (DateTime.Now - Convert.ToDateTime(Console.Title)).TotalMilliseconds}");
-            //}
+           // Console.WriteLine(DateTime.Now+"         返回状态：" +(int)response.StatusCode +"\r\n"+content);
+            if ((int)response.StatusCode == 200)
+            {
+                lock (oo)
+                {
+                    count++;
+                }
+            }
+            if (count >= 1000)
+            {
+                Console.WriteLine($"{count} --总时间：{ (DateTime.Now - Convert.ToDateTime(Console.Title)).TotalMilliseconds}");
+            }
         }
 
         public static void GetFeeItem(dynamic token)
