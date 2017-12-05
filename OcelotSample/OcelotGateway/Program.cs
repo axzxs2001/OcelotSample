@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using App.Metrics.AspNetCore;
+
 namespace OcelotGateway
 {
     public class Program
@@ -23,12 +25,15 @@ namespace OcelotGateway
             builder.UseKestrel()
                    .UseContentRoot(Directory.GetCurrentDirectory())
                    .UseIISIntegration()
+    .ConfigureMetricsWithDefaults(opt=> {  })
+            .UseMetrics()
+                    .UseMetricsWebTracking()
                    .UseUrls("http://*:5000")
                    .UseStartup<Startup>()
                    .UseApplicationInsights();
             var host = builder.Build();
             host.Run();
         }
-      
+
     }
 }

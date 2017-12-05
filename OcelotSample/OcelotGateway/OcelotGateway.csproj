@@ -9,13 +9,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="App.Metrics" Version="1.3.0" />
+    <PackageReference Include="App.Metrics" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.AspNetCore" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.AspNetCore.Tracking" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.Extensions.Middleware" Version="1.2.1" />
     <PackageReference Include="App.Metrics.Extensions.Mvc" Version="1.2.1" />
     <PackageReference Include="App.Metrics.Extensions.Reporting.InfluxDB" Version="1.2.0" />
-    <PackageReference Include="App.Metrics.Formatters.Json" Version="1.2.0" />
+    <PackageReference Include="App.Metrics.Formatters.Json" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="2.0.0-alpha" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Ocelot" Version="2.0.3" />
+    <PackageReference Include="Ocelot" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
