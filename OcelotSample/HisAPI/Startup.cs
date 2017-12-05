@@ -13,6 +13,7 @@ using System.Data;
 using System.Data.SqlClient;
 using HisAPI.Model.Repository;
 using HisAPI.Model.DataModel;
+using DapperPlus;
 
 namespace HisAPI
 {
@@ -43,7 +44,7 @@ namespace HisAPI
             services.AddSingleton(connectionString);
             //sqlieconnection注放
             services.AddScoped<IDbConnection, SqlConnection>();
-            services.AddScoped<IHisDB, HisDB>();
+            services.AddScoped<IDapperPlusDB, DapperPlusDB>();
             services.AddScoped<IFeeItemRepository, FeeItemRepository>();
             services.AddMvc();
         }
