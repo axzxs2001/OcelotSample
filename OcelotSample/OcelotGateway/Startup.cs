@@ -39,55 +39,47 @@ namespace OcelotGateway
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region Metrics监控部分，不用可注释掉
-            //var database = "test";
-            //var uri = new Uri("http://127.0.0.1:8086");
-            //services.AddMetrics(options =>
-            //{
-            //    options.GlobalTags.Add("app", "sample app");
-            //    options.GlobalTags.Add("env", "stage");
-            //})
-            //   .AddHealthChecks()
+            #region Metrics监控配置
+            string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
+            if (IsOpen == "true")
+            {
+                string database = Configuration.GetSection("InfluxDB")["DataBaseName"];
+                string InfluxDBConStr = Configuration.GetSection("InfluxDB")["ConnectionString"];
+                string app = Configuration.GetSection("InfluxDB")["app"];
+                string env = Configuration.GetSection("InfluxDB")["env"];
+                string username = Configuration.GetSection("InfluxDB")["username"];
+                string password = Configuration.GetSection("InfluxDB")["password"];
 
-            //   .AddReporting(
-            //      factory =>
-            //      {
-            //          factory.AddInfluxDb(
-            //    new InfluxDBReporterSettings
-            //    {
-            //        InfluxDbSettings = new InfluxDBSettings(database, uri),
-            //        ReportInterval = TimeSpan.FromSeconds(5)
-            //    });
-            //      })
-            //   .AddMetricsMiddleware(options => options.IgnoredHttpStatusCodes = new[] { 404 });
+                var uri = new Uri(InfluxDBConStr);
 
-            #endregion
-
-            var filter = new MetricsFilter().WhereType(MetricType.Timer);
-            var metrics = new MetricsBuilder()
-                    //AppMetrics.CreateDefaultBuilder()
-                   .Report.ToInfluxDb(options =>
-                   {
-                       options.InfluxDb.BaseUri = new Uri("http://localhost:8086");
-                       options.InfluxDb.Database = "newmetricsdb";
-                       options.InfluxDb.Consistenency = "consistency";
-                       options.InfluxDb.UserName = "root";
-                       options.InfluxDb.Password = "root";
-                       options.InfluxDb.RetensionPolicy = "rp";
-                       options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
-                       options.HttpPolicy.FailuresBeforeBackoff = 5;
-                       options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
-                       options.MetricsOutputFormatter = new MetricsJsonOutputFormatter();
-                       options.Filter = filter;
-                       options.FlushInterval = TimeSpan.FromSeconds(20);
-                   })
-                //.Report.ToInfluxDb("http://localhost:8086", "newmetricsdb")
+                var metrics = AppMetrics.CreateDefaultBuilder()
+                .Configuration.Configure(
+                options =>
+                {
+                    options.AddAppTag(app);
+                    options.AddEnvTag(env);
+                })
+                .Report.ToInfluxDb(
+                options =>
+                {
+                    options.InfluxDb.BaseUri = uri;
+                    options.InfluxDb.Database = database;
+                    options.InfluxDb.UserName = username;
+                    options.InfluxDb.Password = password;
+                    options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
+                    options.HttpPolicy.FailuresBeforeBackoff = 5;
+                    options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
+                    options.FlushInterval = TimeSpan.FromSeconds(5);
+                })
                 .Build();
 
-            services.AddMetrics(metrics);
-            services.AddMetricsTrackingMiddleware();
-            services.AddMetricsReportScheduler();
-            metrics.ReportRunner.RunAllAsync();
+                services.AddMetrics(metrics);
+                services.AddMetricsReportScheduler();
+                services.AddMetricsTrackingMiddleware();
+                services.AddMetricsEndpoints();
+
+            }
+            #endregion
 
 
 
@@ -102,12 +94,26 @@ namespace OcelotGateway
 
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
-            #region Metrics监控部分，不用可注释掉
-            //app.UseMetrics();
-            //app.UseMetricsReporting(lifetime);
-            #endregion
+            #region 注入Metrics
+            string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
+            if (IsOpen == "true")
+            {
+                app.UseMetricsAllMiddleware();
+                // Or to cherry-pick the tracking of interest
+                app.UseMetricsActiveRequestMiddleware();
+                app.UseMetricsErrorTrackingMiddleware();
+                app.UseMetricsPostAndPutSizeTrackingMiddleware();
+                app.UseMetricsRequestTrackingMiddleware();
+                app.UseMetricsOAuth2TrackingMiddleware();
+                app.UseMetricsApdexTrackingMiddleware();
 
-            app.UseMetricsAllMiddleware();
+                app.UseMetricsAllEndpoints();
+                // Or to cherry-pick endpoint of interest
+                app.UseMetricsEndpoint();
+                app.UseMetricsTextEndpoint();
+                app.UseEnvInfoEndpoint();
+            }
+            #endregion
 
             if (env.IsDevelopment())
             {

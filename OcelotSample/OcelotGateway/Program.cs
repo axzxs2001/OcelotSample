@@ -25,9 +25,6 @@ namespace OcelotGateway
             builder.UseKestrel()
                    .UseContentRoot(Directory.GetCurrentDirectory())
                    .UseIISIntegration()
-    .ConfigureMetricsWithDefaults(opt=> {  })
-            .UseMetrics()
-                    .UseMetricsWebTracking()
                    .UseUrls("http://*:5000")
                    .UseStartup<Startup>()
                    .UseApplicationInsights();
