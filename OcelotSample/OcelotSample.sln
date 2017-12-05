@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotGateway", "OcelotGateway\OcelotGateway.csproj", "{B635DB1F-DCAF-48A7-8720-0F66E0EB96A8}"
 EndProject
@@ -21,9 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "工具和文档", "工具�
 		工具和文档\压力测试命令.txt = 工具和文档\压力测试命令.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HisAPI.XUnitTest", "HisAPI.XUnitTest\HisAPI.XUnitTest.csproj", "{DFECCB79-8A56-4036-88B5-97D515F211FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HisAPI.XUnitTest", "HisAPI.XUnitTest\HisAPI.XUnitTest.csproj", "{DFECCB79-8A56-4036-88B5-97D515F211FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperPlus", "DapperPlus\DapperPlus.csproj", "{5ED8D57E-BBDE-4DB5-A800-2A4D9A272941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperPlus", "DapperPlus\DapperPlus.csproj", "{5ED8D57E-BBDE-4DB5-A800-2A4D9A272941}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "其他测试项目", "其他测试项目", "{255EB7A1-EBA5-4F4B-9B16-46973DE3DD1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspectCore-APMDemo", "其他测试项目\AspectCore-APMDemo\AspectCore-APMDemo.csproj", "{1DA26889-0841-4AF0-841F-370881E28C3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +67,16 @@ Global
 		{5ED8D57E-BBDE-4DB5-A800-2A4D9A272941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ED8D57E-BBDE-4DB5-A800-2A4D9A272941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ED8D57E-BBDE-4DB5-A800-2A4D9A272941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DA26889-0841-4AF0-841F-370881E28C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA26889-0841-4AF0-841F-370881E28C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA26889-0841-4AF0-841F-370881E28C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA26889-0841-4AF0-841F-370881E28C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1DA26889-0841-4AF0-841F-370881E28C3C} = {255EB7A1-EBA5-4F4B-9B16-46973DE3DD1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D0E28E0-0019-428F-9C65-B7E2BBFA12A7}
