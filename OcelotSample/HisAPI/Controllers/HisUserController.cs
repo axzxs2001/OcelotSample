@@ -65,19 +65,5 @@ namespace HisAPI.Controllers
 
 
 
-    [Authorize("Permission")]
-    public class FeeItemController : Controller
-    {
-        IFeeItemRepository _feeItemRepository;
-        public FeeItemController(IFeeItemRepository feeItemRepository)
-        {
-            _feeItemRepository = feeItemRepository;
-        }
-        [HttpGet("/hisapi/getfeeitems")]
-        public IActionResult GetFeeItem(string name)
-        {
-            var list = _feeItemRepository.GetFeeItems(name);
-            return new JsonResult(list);
-        }
-    }
+
 }

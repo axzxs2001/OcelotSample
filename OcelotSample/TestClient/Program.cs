@@ -21,7 +21,7 @@ namespace TestClient
             dynamic token = null;
             while (true)
             {
-                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询HisUser数据  5、查询LisUser数据 6、用system登录后的压力测试");
+                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询HisUser数据  5、查询LisUser数据 6、用system登录后的压力测试  7、循环查询his");
                 var mark = Console.ReadLine();
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -44,6 +44,9 @@ namespace TestClient
                         break;
                     case "6":
                         WebHisUser(token);
+                        break;
+                    case "7":
+                        GetFeeItem(token);
                         break;
                 }
                 stopwatch.Stop();
@@ -156,14 +159,20 @@ namespace TestClient
 
         public static void GetFeeItem(dynamic token)
         {
-            var client = new RestClient(_url);
-            //这里要在获取的令牌字符串前加Bearer
-            string tk = "Bearer " + Convert.ToString(token?.access_token);
-            client.AddDefaultHeader("Authorization", tk);
-            var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
-            IRestResponse response = client.Execute(request);
-            var content = response.Content;
-            Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
+            for (int i = 0; i < 500; i++)
+            {
+                var client = new RestClient(_url);
+                //这里要在获取的令牌字符串前加Bearer
+                string tk = "Bearer " + Convert.ToString(token?.access_token);
+                client.AddDefaultHeader("Authorization", tk);
+                var request = new RestRequest("/hisapi/getfeeitems", Method.GET);
+                var radom = new Random();
+                var index = radom.Next(0, 36);
+                request.AddParameter("name", arr[index]);
+                IRestResponse response = client.Execute(request);
+                var content = response.Content;
+                Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
+            }
         }
     }
 
