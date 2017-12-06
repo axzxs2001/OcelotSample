@@ -34,13 +34,51 @@ namespace InfluxDBTool
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            var client = new InfluxDBClient("http://127.0.0.1:8086", "admin", "123456");
-            txbQueryResult.Text = client.Query("AppMetricsDemo", txbSQL.Text);
+            var client = new InfluxDBClient(tstbUrl.Text, tstbUserName.Text, tstbPassword.Text);
+            var content = client.Query(tstbDataBase.Text, txbSQL.Text);
+            var obj = JsonConvert.DeserializeObject(content) as JObject;
+
+            txbQueryResult.Text = content;
+            // GetValues(obj);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        void GetValues(JToken obj)
+        {
+
+
+            switch (obj.Type)
+            {
+                case JTokenType.Property:
+                    var pro = (obj as JProperty);
+                    GetValues(pro.Value);
+                    break;
+                case JTokenType.Array:
+
+                    foreach (var item in obj.Children())
+                    {
+                        GetValues(item);
+                    }
+                    break;
+                case JTokenType.Object:
+                    foreach (var item in obj.Children())
+                    {
+                        GetValues(item);
+                    }
+                    break;
+                case JTokenType.String:
+                    txbQueryResult.Text += "------String---------\r\n";
+                    txbQueryResult.Text += obj.Path + ":" + obj.ToString() + "\r\n";
+                    break;
+            }
+
+        }
+
+        private void frmInfluxTool_Load(object sender, EventArgs e)
         {
 
         }
     }
+
+
 }
+
