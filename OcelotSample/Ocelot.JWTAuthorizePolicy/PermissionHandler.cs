@@ -32,7 +32,12 @@ namespace Ocelot.JWTAuthorizePolicy
             Schemes = schemes;
             _permissions = permissions;
         }
-
+        /// <summary>
+        /// 自定义策略处理方法
+        /// </summary>
+        /// <param name="context">上下文</param>
+        /// <param name="requirement">参数</param>
+        /// <returns></returns>
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             //从AuthorizationHandlerContext转成HttpContext，以便取出表求信息
