@@ -7,40 +7,23 @@ using Microsoft.Extensions.Configuration;
 using Ocelot.Middleware;
 using Ocelot.JWTAuthorizePolicy;
 using Ocelot.DependencyInjection;
-
 using App.Metrics;
-using App.Metrics.Reporting.Interfaces;
-using App.Metrics.Extensions.Reporting.InfluxDB;
-using App.Metrics.Extensions.Reporting.InfluxDB.Client;
 using Microsoft.Extensions.DependencyInjection;
-using App.Metrics.Formatters.Json;
-using App.Metrics.Filtering;
-using App.Metrics.AspNetCore.Reporting;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace OcelotGateway
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
-            builder.SetBasePath(environment.ContentRootPath)
-                   .AddJsonFile("appsettings.json", false, reloadOnChange: true)
-                   .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: false, reloadOnChange: true)
-                   //添加ocelot配置文件
-                   .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
-                   .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
-        public IConfigurationRoot Configuration { get; }
-
-
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+         
             #region Metrics监控配置
-            string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
+            string IsOpen = Configuration.GetSection("InfluxDB:IsOpen").Value.ToLower();
             if (IsOpen == "true")
             {
                 string database = Configuration.GetSection("InfluxDB")["DataBaseName"];
@@ -81,14 +64,14 @@ namespace OcelotGateway
             }
             #endregion
 
-
+           
 
             var audienceConfig = Configuration.GetSection("Audience");
             //注入OcelotJwtBearer
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
 
             //注放Ocelot
-            services.AddOcelot(Configuration);
+            services.AddOcelot(Configuration as ConfigurationRoot);
         }
 
 

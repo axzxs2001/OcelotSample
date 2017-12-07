@@ -20,7 +20,7 @@
     <PackageReference Include="App.Metrics.Formatters.Json" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="2.0.0-alpha" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Ocelot" Version="2.0.4" />
+    <PackageReference Include="Ocelot" Version="2.1.0-unstable0036" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="configuration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

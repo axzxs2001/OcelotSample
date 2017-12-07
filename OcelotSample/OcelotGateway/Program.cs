@@ -17,19 +17,27 @@ namespace OcelotGateway
         public static void Main(string[] args)
         {
             Console.Title = "OcelotGateway";
+            BuildWebHost(args).Run();
+        }
+        public static IWebHost BuildWebHost(string[] args)
+        {
             IWebHostBuilder builder = new WebHostBuilder();
-            builder.ConfigureServices(service =>
+            //注入WebHostBuilder
+            return builder.ConfigureServices(service =>
             {
                 service.AddSingleton(builder);
-            });
-            builder.UseKestrel()
-                   .UseContentRoot(Directory.GetCurrentDirectory())
-                   .UseIISIntegration()
-                   .UseUrls("http://*:5000")
-                   .UseStartup<Startup>()
-                   .UseApplicationInsights();
-            var host = builder.Build();
-            host.Run();
+            })
+                //加载configuration配置文人年
+                .ConfigureAppConfiguration(conbuilder =>
+                {
+                    conbuilder.AddJsonFile("appsettings.json");
+                    conbuilder.AddJsonFile("configuration.json");
+                })
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseKestrel()
+                .UseUrls("http://*:5000")
+                .UseStartup<Startup>()
+                .Build();
         }
 
     }
