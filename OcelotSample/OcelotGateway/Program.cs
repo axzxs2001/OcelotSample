@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using App.Metrics.AspNetCore;
 
 namespace OcelotGateway
 {
@@ -34,7 +28,7 @@ namespace OcelotGateway
                     conbuilder.AddJsonFile("configuration.json");
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseKestrel()
+                .UseKestrel()          
                 .UseUrls("http://*:5000")
                 .UseStartup<Startup>()
                 .Build();

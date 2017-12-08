@@ -1,14 +1,14 @@
 ﻿using System;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-
 using Ocelot.Middleware;
 using Ocelot.JWTAuthorizePolicy;
 using Ocelot.DependencyInjection;
 using App.Metrics;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using App.Metrics.Health;
 
 namespace OcelotGateway
 {
@@ -32,10 +32,9 @@ namespace OcelotGateway
                 string env = Configuration.GetSection("InfluxDB")["env"];
                 string username = Configuration.GetSection("InfluxDB")["username"];
                 string password = Configuration.GetSection("InfluxDB")["password"];
-
                 var uri = new Uri(InfluxDBConStr);
 
-                var metrics = AppMetrics.CreateDefaultBuilder()
+                var metrics = AppMetrics.CreateDefaultBuilder()  
                 .Configuration.Configure(
                 options =>
                 {
@@ -53,7 +52,7 @@ namespace OcelotGateway
                     options.HttpPolicy.FailuresBeforeBackoff = 5;
                     options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
                     options.FlushInterval = TimeSpan.FromSeconds(5);
-                })
+                })                
                 .Build();
 
                 services.AddMetrics(metrics);
@@ -81,20 +80,8 @@ namespace OcelotGateway
             string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
             if (IsOpen == "true")
             {
-                app.UseMetricsAllMiddleware();
-                // Or to cherry-pick the tracking of interest
-                app.UseMetricsActiveRequestMiddleware();
-                app.UseMetricsErrorTrackingMiddleware();
-                app.UseMetricsPostAndPutSizeTrackingMiddleware();
-                app.UseMetricsRequestTrackingMiddleware();
-                app.UseMetricsOAuth2TrackingMiddleware();
-                app.UseMetricsApdexTrackingMiddleware();
-
-                app.UseMetricsAllEndpoints();
-                // Or to cherry-pick endpoint of interest
-                app.UseMetricsEndpoint();
-                app.UseMetricsTextEndpoint();
-                app.UseEnvInfoEndpoint();
+                app.UseMetricsAllMiddleware();            
+                app.UseMetricsAllEndpoints();                   
             }
             #endregion
 
