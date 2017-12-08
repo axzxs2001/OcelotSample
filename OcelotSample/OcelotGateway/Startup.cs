@@ -7,8 +7,6 @@ using Ocelot.JWTAuthorizePolicy;
 using Ocelot.DependencyInjection;
 using App.Metrics;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using App.Metrics.Health;
 
 namespace OcelotGateway
 {
