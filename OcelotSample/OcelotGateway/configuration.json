@@ -38,6 +38,21 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamPort": 5002,
+      "DownstreamHost": "localhost",
+      "UpstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "Get" ],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "AuthenticationOptions": {
+      }
+    },
+    {
       "DownstreamPathTemplate": "/hisapi/hisuser",
       "DownstreamScheme": "http",
       "DownstreamPort": 5001,

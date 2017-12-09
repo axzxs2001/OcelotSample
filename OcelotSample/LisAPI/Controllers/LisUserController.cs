@@ -42,7 +42,12 @@ namespace LisAPI.Controllers
         public void Delete(int id)
         {
         }
-
+        [AllowAnonymous]
+        [HttpGet("/")]
+        public IEnumerable<string> ABC()
+        {
+            return new string[] { "Lis用户服务", "首页" };
+        }
         [AllowAnonymous]
         [HttpGet("/lisapi/denied")]
         public IActionResult Denied()
