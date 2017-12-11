@@ -15,6 +15,9 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Ocelot.JWTAuthorizePolicy;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace LisAPI
 {
@@ -41,6 +44,25 @@ namespace LisAPI
             services.AddSingleton(permission);
 
             services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Lis API",
+                    Version = "v1",
+                    Description = "Lis API RESTful API ",
+                    TermsOfService = "None",
+                    Contact = new Contact
+                    {
+                        Name = "桂素伟",
+                        Email = "axzxs2001@163.com"
+                    },
+                });
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "LisAPI.xml");
+                c.IncludeXmlComments(filePath);
+                c.CustomSchemaIds((type) => type.FullName);
+            });
         }
 
 
@@ -50,8 +72,19 @@ namespace LisAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
+                c.RouteTemplate = "docs/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "docs";
+                c.SwaggerEndpoint("/docs/v1/swagger.json", "Lis API V1");
+                c.InjectStylesheet("/swagger-ui/custom.css");
+                c.InjectOnCompleteJavaScript("/swagger-ui/custom.js");
+            });
+            app.UseMvc();    
         }
     }
 }
