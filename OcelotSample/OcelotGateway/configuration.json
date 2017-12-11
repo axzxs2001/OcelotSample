@@ -23,6 +23,28 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/index.html",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5002,
+      "UpstreamPathTemplate": "/index.html",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ReRouteIsCaseSensitive": false,
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10,
+        "TimeoutValue": 5000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/lisapi/denied",
       "DownstreamScheme": "http",
       "DownstreamPort": 5002,
@@ -57,14 +79,12 @@
       "DownstreamScheme": "http",
       "DownstreamPort": 5002,
       "DownstreamHost": "localhost",
-      "UpstreamPathTemplate": "/docs/",
+      "UpstreamPathTemplate": "/lisapi/docs/",
       "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
         "TimeoutValue": 5000
-      },
-      "AuthenticationOptions": {
       }
     },
     {

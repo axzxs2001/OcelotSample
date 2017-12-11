@@ -82,6 +82,7 @@ namespace OcelotGateway
                 app.UseMetricsAllEndpoints();                   
             }
             #endregion
+            app.UseStaticFiles();
 
             if (env.IsDevelopment())
             {
