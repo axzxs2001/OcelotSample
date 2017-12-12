@@ -19,7 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ocelot.ConfigEditor\Ocelot.ConfigEditor.csproj" />
     <ProjectReference Include="..\Ocelot.JWTAuthorizePolicy\Ocelot.JWTAuthorizePolicy.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ocelot.ConfigEditor.PrecompiledViews">
+      <HintPath>..\Ocelot.ConfigEditor\obj\precompiled\netcoreapp2.0\Ocelot.ConfigEditor.PrecompiledViews.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

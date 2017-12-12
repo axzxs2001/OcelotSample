@@ -7,6 +7,7 @@ using Ocelot.JWTAuthorizePolicy;
 using Ocelot.DependencyInjection;
 using App.Metrics;
 using Microsoft.Extensions.DependencyInjection;
+using Ocelot.ConfigEditor;
 
 namespace OcelotGateway
 {
@@ -67,14 +68,15 @@ namespace OcelotGateway
             //注入OcelotJwtBearer
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
 
-            //注放Ocelot
+            //注入Ocelot
             services.AddOcelot(Configuration as ConfigurationRoot);
+            services.AddOcelotConfigEditor();
         }
 
 
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
-            #region 注入Metrics
+            #region 使用中间件Metrics
             string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
             if (IsOpen == "true")
             {
@@ -88,6 +90,9 @@ namespace OcelotGateway
             {
                 app.UseDeveloperExceptionPage();
             }
+
+
+            app.UseOcelotConfigEditor(new ConfigEditorOptions { Path = "edit" });
             await app.UseOcelot();
         }
     }

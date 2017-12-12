@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Common;
 
 namespace LisAPI.Controllers
 {
@@ -57,6 +58,14 @@ namespace LisAPI.Controllers
                 Status = false,
                 Message = "Lis你无权限访问"
             });
+        }
+
+        [AllowAnonymous]
+        [HttpGet("/getactions")]
+        public IActionResult GetAllAction()
+        {
+            var actions = ActionHandle.GetActions();
+            return new JsonResult(actions);
         }
     }
 }
