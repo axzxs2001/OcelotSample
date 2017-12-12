@@ -35,7 +35,7 @@ namespace Common
         static ActionMessage[] GetActionNames(Type type)
         {
             var list = new List<ActionMessage>();
-            var controllerName = type.Name.ToLower().Replace("controller","");
+            var controllerName = type.Name.ToLower();
             var apiname = "";
             foreach(var att in type.GetCustomAttributes(false))
             {
