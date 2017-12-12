@@ -1,0 +1,48 @@
+﻿@using System.IO
+@using Microsoft.AspNetCore.Mvc.Razor
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Ocelot.Configuration.File
+@using Ocelot.ConfigEditor
+@inject IReloadService ReloadService
+
+@model FileConfiguration
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-3 col-vertical-offset-2">
+        <a asp-action="CreateReRoute">Create</a>
+    </div>
+    <div class="col-md-3">
+        <h2>ReRoutes</h2>
+        <ul>
+            @foreach (var route in Model.ReRoutes)
+            {
+                <li>
+                    <a asp-action="EditReRoute" asp-route-id="@route.GetId()">
+                        @($"{route.DownstreamScheme}://{route.DownstreamHost}:{route.DownstreamPort}{route.DownstreamPathTemplate}")
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts
+{
+    @if (await ReloadService.IsReloadRequired())
+    {
+        <script type="text/javascript">
+            $.notify("There are pending configuration changes. Click to reload.", { className: "warn", autoHide: false });
+
+            $(document).on('click',
+                '.notifyjs-bootstrap-warn',
+                function() {
+                    $("#reload-form").submit();
+                });
+        </script>
+        <form id="reload-form" method="post" action="@Url.Action("Reload")"></form>
+    }
+}
