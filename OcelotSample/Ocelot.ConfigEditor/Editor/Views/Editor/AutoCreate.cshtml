@@ -31,25 +31,42 @@
                 <th>谓词</th>
             </tr>
         </thead>
-        <tbody id="tbody"></tbody>
+        <tbody id="actiontr">
+            <tr is="action-row" v-for="action in actions"  v-bind:action="action"></tr>
+        </tbody>
     </table>
 </div>
 @section Scripts
     {
+
+    <!--tr模版-->
+    <script type="text/x-template" id="action-tr">
+        <tr>
+            <td>{{action.controllername}}</td>
+            <td>{{action.actionname}}</td>
+            <td><span v-for="pre in action.predicates">{{pre}}&nbsp;&nbsp;</span></td>
+            <td><input type="checkbox" id="checkbox" v-model="action.isauthzation"></td>           
+        </tr>
+    </script>
     <script>
+
+        //用户组件
+        Vue.component("action-row", {
+            props: ["action"],
+            template: '#action-tr'       
+        })
+
         var actionJson;
         function GetAction() {
             $.get("/getserver", { ip: $("#ip").val() }, function (backData) {
                 actionJson = backData.data;
-                $("#tbody").html("");
-                $.each(backData.data, function (index, ele) {
-                    var pres = '';
-                    $.each(ele.predicates, function (index, elm) {
-                        pres += '[' + elm + '] ';
-                    })
-                    $("#tbody").append("<tr><td>" + ele.controllername + "</td><td>" + ele.actionname
-                        + "</td><td>" + pres + "</td></tr>");
-                })
+
+                new Vue({
+                    el: "#actiontr",
+                    data: {
+                        actions: backData.data
+                    }
+                });            
             })
         }
 
@@ -61,7 +78,6 @@
                     alert("保存成功！");
                 }
             })
-
         }
     </script>
 }

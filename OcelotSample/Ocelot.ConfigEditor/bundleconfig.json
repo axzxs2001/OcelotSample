@@ -15,6 +15,7 @@
     "inputFiles": [
       "wwwroot/lib/jquery/dist/jquery.js",
       "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "wwwroot/lib/vue/dist/js/vue.min.js",
       "wwwroot/lib/jquery-validation/dist/additional-methods.js",
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "wwwroot/js/bootstrap.js",

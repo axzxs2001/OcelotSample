@@ -175,13 +175,15 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
         [NamespaceConstraint]
         public IActionResult AutoCreate()
         {
-            var client = new HttpClient();
-            client.BaseAddress = new System.Uri(@"http://127.0.0.1:5002/");
-            var json = client.GetStringAsync("getactions").GetAwaiter().GetResult();
             return View();
         }
 
         //[NamespaceConstraint]
+        /// <summary>
+        /// 获取项目中的路由
+        /// </summary>
+        /// <param name="ip">服务IP</param>
+        /// <returns></returns>
         [HttpGet("/getserver")]
         public IActionResult GetActionByServer(string ip)
         {
@@ -200,7 +202,7 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                     {
                         predicates.Add(pre.predicate.ToString());
                     }
-                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray() });
+                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray(), isauthzation = false });
                 }
                 return new JsonResult(new { result = 1, data = list });
             }
@@ -209,8 +211,15 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                 return new JsonResult(new { result = 0, message = exc.Message });
             }
         }
+        /// <summary>
+        /// 自动保存服务中路由到网关配置
+        /// </summary>
+        /// <param name="actions"></param>
+        /// <param name="ip"></param>
+        /// <param name="jwtkey"></param>
+        /// <returns></returns>
         [HttpPost("/savaconfig")]
-        public IActionResult SavaFileReRoute(List<MyAction> actions, string ip, string jwtkey)
+        public IActionResult SavaFileReRoute(List<ConfigAction> actions, string ip, string jwtkey)
         {
             try
             {
@@ -225,8 +234,7 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                     {
                         routes.Data.ReRoutes.Remove(oldRoute);
                     }
-
-                    var newRoute = new FileReRoute { DownstreamPathTemplate = action.ActionName, UpstreamPathTemplate = action.ActionName, DownstreamHost = host, DownstreamPort = port, DownstreamScheme = "http", UpstreamHttpMethod = new List<string>(action.Predicates), AuthenticationOptions = new FileAuthenticationOptions { AuthenticationProviderKey = jwtkey } };
+                    var newRoute = new FileReRoute { DownstreamPathTemplate = action.ActionName, UpstreamPathTemplate = action.ActionName, DownstreamHost = host, DownstreamPort = port, DownstreamScheme = "http", UpstreamHttpMethod = new List<string>(action.Predicates), AuthenticationOptions = new FileAuthenticationOptions { AuthenticationProviderKey = action.IsAuthzation ? jwtkey : "" } };
 
                     routes.Data.ReRoutes.Add(newRoute);
                     _fileConfigRepo.Set(routes.Data);
@@ -241,11 +249,4 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
         }
     }
 
-    public class MyAction
-    {
-        public string ControllerName { get; set; }
-        public string ActionName { get; set; }
-
-        public string[] Predicates { get; set; }
-    }
 }
