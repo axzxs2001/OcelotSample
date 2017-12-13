@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody id="actiontr">
-            <tr is="action-row" v-for="action in actions"  v-bind:action="action"></tr>
+            
         </tbody>
     </table>
 </div>
@@ -58,6 +58,7 @@
 
         var actionJson;
         function GetAction() {
+            $("#actiontr").html('<tr is="action-row" v-for="action in actions"  v-bind:action="action"></tr>');
             $.get("/getserver", { ip: $("#ip").val() }, function (backData) {
                 actionJson = backData.data;
 

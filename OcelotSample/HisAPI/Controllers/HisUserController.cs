@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using HisAPI.Model.Repository;
+using Common;
 
 namespace HisAPI.Controllers
 {
@@ -59,7 +60,13 @@ namespace HisAPI.Controllers
                 Message = "His你无权限访问"
             });
         }
-
+        [AllowAnonymous]
+        [HttpGet("/getactions")]
+        public IActionResult GetAllAction()
+        {
+            var actions = ActionHandle.GetActions();
+            return new JsonResult(actions);
+        }
 
     }
 
