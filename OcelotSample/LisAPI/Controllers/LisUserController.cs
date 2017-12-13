@@ -60,13 +60,7 @@ namespace LisAPI.Controllers
             });
         }
 
-        [AllowAnonymous]
-        [HttpGet("/getactions")]
-        public IActionResult GetAllAction()
-        {
-            var actions = ActionHandle.GetActions();
-            return new JsonResult(actions);
-        }
+  
     }
 }
 
