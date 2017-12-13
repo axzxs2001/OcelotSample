@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="NuGet.Commandline" Version="4.4.1" />
-    <PackageReference Include="Ocelot" Version="2.1.0-unstable0037" />
+    <PackageReference Include="Ocelot" Version="2.1.0-unstable0041" />
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
   </ItemGroup>
 

@@ -2,6 +2,6 @@
 {
     public class ConfigEditorOptions
     {
-        public string Path { get; set; }
+        public string[] Paths { get; set; }
     }
 }

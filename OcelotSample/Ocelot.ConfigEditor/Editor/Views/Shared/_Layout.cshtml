@@ -8,12 +8,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Ocelot Configuration Editor</title>
-
     <environment names="Development,Staging,Production">
-        <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "site.min.css" }, Context.Request.Scheme)"/>
+        <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "site.min.css" }, Context.Request.Scheme)" />
         <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "glyphicons-halflings-regular.eot" }, Context.Request.Scheme)" />
         <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "glyphicons-halflings-regular.svg" }, Context.Request.Scheme)" />
         <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "glyphicons-halflings-regular.ttf" }, Context.Request.Scheme)" />
@@ -21,6 +20,7 @@
         <link rel="stylesheet" href="@Url.Action("ContentFile", "Editor", new { id = "glyphicons-halflings-regular.woff2" }, Context.Request.Scheme)" />
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
+    @RenderSection("Css", false)
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">

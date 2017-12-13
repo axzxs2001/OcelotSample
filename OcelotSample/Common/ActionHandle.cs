@@ -41,7 +41,7 @@ namespace Common
             {
                 if (att is RouteAttribute && (att as RouteAttribute).Template != null)
                 {
-                    apiname = (att as RouteAttribute).Template.ToLower().TrimStart('/').Replace("[controller]", controllerName);
+                    apiname = (att as RouteAttribute).Template.ToLower().TrimStart('/').Replace("[controller]", controllerName.Replace("controller",""));
                 }
             }
             foreach (var method in type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
@@ -74,7 +74,7 @@ namespace Common
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.ToLower()}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Get" });
+                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.ToLower().Replace("controller","")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Get" });
                         }
                     }
                     if (att is HttpPostAttribute)
@@ -90,7 +90,7 @@ namespace Common
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Post" });
+                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.Replace("controller", "")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Post" });
                         }
                     }
                     if (att is HttpDeleteAttribute)
@@ -106,7 +106,7 @@ namespace Common
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Delete" });
+                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.Replace("controller", "")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Delete" });
                         }
                     }
                     if (att is HttpPutAttribute)
@@ -122,7 +122,7 @@ namespace Common
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Put" });
+                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.Replace("controller", "")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Put" });
                         }
                     }
                 }

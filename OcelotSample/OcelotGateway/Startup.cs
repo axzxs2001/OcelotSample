@@ -20,7 +20,7 @@ namespace OcelotGateway
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-         
+
             #region Metrics监控配置
             string IsOpen = Configuration.GetSection("InfluxDB:IsOpen").Value.ToLower();
             if (IsOpen == "true")
@@ -33,7 +33,7 @@ namespace OcelotGateway
                 string password = Configuration.GetSection("InfluxDB")["password"];
                 var uri = new Uri(InfluxDBConStr);
 
-                var metrics = AppMetrics.CreateDefaultBuilder()  
+                var metrics = AppMetrics.CreateDefaultBuilder()
                 .Configuration.Configure(
                 options =>
                 {
@@ -51,7 +51,7 @@ namespace OcelotGateway
                     options.HttpPolicy.FailuresBeforeBackoff = 5;
                     options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
                     options.FlushInterval = TimeSpan.FromSeconds(5);
-                })                
+                })
                 .Build();
 
                 services.AddMetrics(metrics);
@@ -62,7 +62,7 @@ namespace OcelotGateway
             }
             #endregion
 
-           
+
 
             var audienceConfig = Configuration.GetSection("Audience");
             //注入OcelotJwtBearer
@@ -80,8 +80,8 @@ namespace OcelotGateway
             string IsOpen = Configuration.GetSection("InfluxDB")["IsOpen"].ToLower();
             if (IsOpen == "true")
             {
-                app.UseMetricsAllMiddleware();            
-                app.UseMetricsAllEndpoints();                   
+                app.UseMetricsAllMiddleware();
+                app.UseMetricsAllEndpoints();
             }
             #endregion
             app.UseStaticFiles();
@@ -91,8 +91,7 @@ namespace OcelotGateway
                 app.UseDeveloperExceptionPage();
             }
 
-
-            app.UseOcelotConfigEditor(new ConfigEditorOptions { Path = "edit" });
+            app.UseOcelotConfigEditor(new ConfigEditorOptions { Paths = new string[] { "edit", "create" } });
             await app.UseOcelot();
         }
     }

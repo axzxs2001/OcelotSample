@@ -1,0 +1,67 @@
+﻿
+@section Css
+    {
+    <style>
+        .row {
+            margin-top: 5px;
+        }
+    </style>
+}
+<div class="row">
+    <div class="col-md-4">
+        <span style="font-weight:bold">IP:</span><input type="text" class="form-control" style="display:inline" value="127.0.0.1:5002" name="ip" id="ip" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-default" onclick="GetAction()">加载actions</button>
+    </div>
+    <div class="col-md-4">
+        <span style="font-weight:bold">JWT Key:</span><input type="text" class="form-control" style="display:inline" value="" name="jwtkey" id="jwtkey" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-default" onclick="Sava()">保存配置</button>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Controller名称</th>
+                <th>地址</th>
+                <th>谓词</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</div>
+@section Scripts
+    {
+    <script>
+        var actionJson;
+        function GetAction() {
+            $.get("/getserver", { ip: $("#ip").val() }, function (backData) {
+                actionJson = backData.data;
+                $("#tbody").html("");
+                $.each(backData.data, function (index, ele) {
+                    var pres = '';
+                    $.each(ele.predicates, function (index, elm) {
+                        pres += '[' + elm + '] ';
+                    })
+                    $("#tbody").append("<tr><td>" + ele.controllername + "</td><td>" + ele.actionname
+                        + "</td><td>" + pres + "</td></tr>");
+                })
+            })
+        }
+
+        function Sava() {
+            $.post("/savaconfig", { actions: actionJson, jwtkey: $("#jwtkey").val(), ip: $("#ip").val() }, function (backData) {
+                if (backData.result != 1) {
+                    alert(backData.message);
+                } else {
+                    alert("保存成功！");
+                }
+            })
+
+        }
+    </script>
+}

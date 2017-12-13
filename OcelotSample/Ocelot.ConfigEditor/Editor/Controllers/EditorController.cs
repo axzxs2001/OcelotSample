@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 
 using FluentValidation.Results;
@@ -167,5 +169,83 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
 
             return fileId.EndsWith(".jpg") ? "image/jpeg" : "text";
         }
+
+
+
+        [NamespaceConstraint]
+        public IActionResult AutoCreate()
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new System.Uri(@"http://127.0.0.1:5002/");
+            var json = client.GetStringAsync("getactions").GetAwaiter().GetResult();
+            return View();
+        }
+
+        //[NamespaceConstraint]
+        [HttpGet("/getserver")]
+        public IActionResult GetActionByServer(string ip)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new System.Uri($@"http://{ip}");
+                var json = client.GetStringAsync("getactions").GetAwaiter().GetResult();
+                var actions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(json);
+                var groupActions = actions.GroupBy(s => new { s.actionName, s.controllerName });
+                var list = new List<dynamic>();
+                foreach (var action in groupActions)
+                {
+                    var predicates = new List<string>();
+                    foreach (var pre in action)
+                    {
+                        predicates.Add(pre.predicate.ToString());
+                    }
+                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray() });
+                }
+                return new JsonResult(new { result = 1, data = list });
+            }
+            catch (Exception exc)
+            {
+                return new JsonResult(new { result = 0, message = exc.Message });
+            }
+        }
+        [HttpPost("/savaconfig")]
+        public IActionResult SavaFileReRoute(List<MyAction> actions, string ip, string jwtkey)
+        {
+            try
+            {
+                var list = new List<FileReRoute>();
+                var host = ip.Split(':')[0];
+                var port = int.Parse(ip.Split(':')[1]);
+                foreach (var action in actions)
+                {
+                    var routes = _fileConfigRepo.Get().GetAwaiter().GetResult();
+                    var oldRoute = routes.Data.ReRoutes.FirstOrDefault(r => action.ActionName == r.DownstreamPathTemplate && action.ActionName == r.DownstreamScheme && host == r.DownstreamHost && port == r.DownstreamPort && action.ActionName == r.UpstreamPathTemplate);
+                    if (oldRoute != null)
+                    {
+                        routes.Data.ReRoutes.Remove(oldRoute);
+                    }
+
+                    var newRoute = new FileReRoute { DownstreamPathTemplate = action.ActionName, UpstreamPathTemplate = action.ActionName, DownstreamHost = host, DownstreamPort = port, DownstreamScheme = "http", UpstreamHttpMethod = new List<string>(action.Predicates), AuthenticationOptions = new FileAuthenticationOptions { AuthenticationProviderKey = jwtkey } };
+
+                    routes.Data.ReRoutes.Add(newRoute);
+                    _fileConfigRepo.Set(routes.Data);
+                    _reload.AddReloadFlag();
+                }
+                return new JsonResult(new { result = 1 });
+            }
+            catch (Exception exc)
+            {
+                return new JsonResult(new { result = 0, message = exc.Message });
+            }
+        }
+    }
+
+    public class MyAction
+    {
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
+
+        public string[] Predicates { get; set; }
     }
 }
