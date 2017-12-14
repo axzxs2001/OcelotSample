@@ -13,6 +13,10 @@ namespace LisAPI.Controllers
     public class LisUserController : Controller
     {
         // GET api/values
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -20,6 +24,11 @@ namespace LisAPI.Controllers
         }
 
         // GET api/values/5
+        /// <summary>
+        /// 按ID查询
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -27,28 +36,50 @@ namespace LisAPI.Controllers
         }
 
         // POST api/values
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="value"></param>
         [HttpPost]
         public void Post([FromBody]string value)
         {
         }
 
         // PUT api/values/5
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="value">值</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE api/values/5
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id">ID</param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
         }
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("/")]
         public IEnumerable<string> ABC()
         {
             return new string[] { "Lis用户服务", "首页" };
         }
+        /// <summary>
+        /// 拒绝路由
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("/lisapi/denied")]
         public IActionResult Denied()
@@ -60,7 +91,22 @@ namespace LisAPI.Controllers
             });
         }
 
-  
+
+    }
+
+    /// <summary>
+    /// abc controller
+    /// </summary>
+    public class ABCController:Controller
+    {
+        /// <summary>
+        /// KKK
+        /// </summary>
+        [HttpGet]
+        public void KKK()
+        {
+           
+        }
     }
 }
 

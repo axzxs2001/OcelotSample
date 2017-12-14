@@ -26,9 +26,11 @@
     <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
         <thead>
             <tr>
+                <th>注释</th>
                 <th>Controller名称</th>
                 <th>地址</th>
                 <th>谓词</th>
+                <th>是否Token验证</th>
             </tr>
         </thead>
         <tbody id="actiontr">
@@ -42,10 +44,11 @@
     <!--tr模版-->
     <script type="text/x-template" id="action-tr">
         <tr>
+            <td>{{action.commentaries}}</td>
             <td>{{action.controllername}}</td>
             <td>{{action.actionname}}</td>
             <td><span v-for="pre in action.predicates">{{pre}}&nbsp;&nbsp;</span></td>
-            <td><input type="checkbox" id="checkbox" v-model="action.isauthzation"></td>           
+            <td><input type="checkbox" id="checkbox" v-model="action.isauthzation"></td>
         </tr>
     </script>
     <script>

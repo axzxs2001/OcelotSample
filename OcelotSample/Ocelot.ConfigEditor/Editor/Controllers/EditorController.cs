@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-
+using System.Text;
 using FluentValidation.Results;
 
 using Microsoft.AspNetCore.Mvc;
@@ -193,16 +193,18 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                 client.BaseAddress = new System.Uri($@"http://{ip}");
                 var json = client.GetStringAsync("getactions").GetAwaiter().GetResult();
                 var actions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(json);
-                var groupActions = actions.GroupBy(s => new { s.actionName, s.controllerName });
+                var groupActions = actions.GroupBy(s => new {s.actionName, s.controllerName });
                 var list = new List<dynamic>();
                 foreach (var action in groupActions)
                 {
                     var predicates = new List<string>();
+                    var comms = new StringBuilder();
                     foreach (var pre in action)
                     {
                         predicates.Add(pre.predicate.ToString());
+                        comms.AppendLine($"{pre.predicate.ToString()}：{pre.commentaries.ToString()}，");
                     }
-                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray(), isauthzation = true });
+                    list.Add(new { commentaries = comms.ToString().Trim('，'), controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray(), isauthzation = true });
                 }
                 return new JsonResult(new { result = 1, data = list });
             }

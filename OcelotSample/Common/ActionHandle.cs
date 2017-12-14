@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 namespace Common
 {
@@ -34,22 +35,30 @@ namespace Common
         /// <returns></returns>
         static ActionMessage[] GetActionNames(Type type)
         {
+            var dic = GetXML();
             var list = new List<ActionMessage>();
             var controllerName = type.Name.ToLower();
             var apiname = "";
-            foreach(var att in type.GetCustomAttributes(false))
+            foreach (var att in type.GetCustomAttributes(false))
             {
                 if (att is RouteAttribute && (att as RouteAttribute).Template != null)
                 {
-                    apiname = (att as RouteAttribute).Template.ToLower().TrimStart('/').Replace("[controller]", controllerName.Replace("controller",""));
+                    apiname = (att as RouteAttribute).Template.ToLower().TrimStart('/').Replace("[controller]", controllerName.Replace("controller", ""));
                 }
             }
             foreach (var method in type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
             {
+                var fullMethodName = $"M:{method.DeclaringType.FullName}.{method.Name}(";
+                foreach (var par in method.GetParameters())
+                {
+                    fullMethodName += $"{par.ParameterType.FullName},";
+                }
+                fullMethodName = $"{fullMethodName.TrimEnd(',')})";
+
+                var commentaries = dic.ContainsKey(fullMethodName) ? dic[fullMethodName] : "";
                 var count = list.Count;
                 foreach (var att in method.GetCustomAttributes(false))
                 {
-
                     if (att is RouteAttribute && (att as RouteAttribute).Template != null)
                     {
                         var action = (att as RouteAttribute).Template.ToLower();
@@ -58,7 +67,7 @@ namespace Common
                             action = $"/{apiname}";
                         }
 
-                        list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = action, Predicate ="Get" });
+                        list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = action, Predicate = "Get" });
                     }
 
                     if (att is HttpGetAttribute)
@@ -66,15 +75,15 @@ namespace Common
                         if ((att as HttpGetAttribute).Template != null)
                         {
                             var action = (att as HttpGetAttribute).Template.ToLower();
-                            if(!action.StartsWith("/"))
+                            if (!action.StartsWith("/"))
                             {
                                 action = $"/{apiname}/{action}";
                             }
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = action, Predicate = "Get" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = action, Predicate = "Get" });
                         }
                         else
-                        {                            
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Get" });
+                        {
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Get" });
                         }
                     }
                     if (att is HttpPostAttribute)
@@ -86,11 +95,11 @@ namespace Common
                             {
                                 action = $"/{apiname}/{action}";
                             }
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = action, Predicate = "Post" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = action, Predicate = "Post" });
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Post" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Post" });
                         }
                     }
                     if (att is HttpDeleteAttribute)
@@ -102,11 +111,11 @@ namespace Common
                             {
                                 action = $"/{apiname}/{action}";
                             }
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = action, Predicate = "Delete" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = action, Predicate = "Delete" });
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Delete" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Delete" });
                         }
                     }
                     if (att is HttpPutAttribute)
@@ -118,21 +127,59 @@ namespace Common
                             {
                                 action = $"/{apiname}/{action}";
                             }
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = action, Predicate = "Put" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = action, Predicate = "Put" });
                         }
                         else
                         {
-                            list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Put" });
+                            list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = $"/{apiname}", Predicate = "Put" });
                         }
                     }
                 }
                 //当没有Route特性时用controller名称和action名称
                 if (count == list.Count)
                 {
-                    list.Add(new ActionMessage() { ControllerName = controllerName, ActionName = $"/{controllerName.Replace("controller", "")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Get" });
+                    list.Add(new ActionMessage() { Commentaries = commentaries, ControllerName = controllerName, ActionName = $"/{controllerName.Replace("controller", "")}/{method.Name.ToLower().TrimStart('/')}", Predicate = "Get" });
                 }
             }
             return list.ToArray();
+        }
+        /// <summary>
+        /// 获取方法注释
+        /// </summary>
+        /// <returns></returns>
+        private static Dictionary<string, string> GetXML()
+        {
+            var assembly = Assembly.GetEntryAssembly();
+            var xmlPath = assembly.Location.Replace(".dll", ".xml");
+            if (System.IO.File.Exists(xmlPath))
+            {
+                var xml = new XmlDocument();
+                xml.Load(xmlPath);
+
+                var nodes = xml.SelectNodes("doc")[0].SelectNodes("members")[0].ChildNodes;
+                var dic = new Dictionary<string, string>();
+                foreach (XmlNode node in nodes)
+                {
+                    var xmlDoc = node.Attributes[0].Value;
+                    if (xmlDoc.StartsWith("M:"))
+                    {
+                        var des = node.SelectNodes("summary")[0].InnerText;
+                        if (xmlDoc.Contains("(") && xmlDoc.Contains(")"))
+                        {                      
+                            dic.Add(xmlDoc, des.Trim('\r').Trim('\n').Trim());
+                        }
+                        else
+                        {
+                            dic.Add(xmlDoc+"()", des.Trim('\r').Trim('\n').Trim());
+                        }
+                    }
+                }
+                return dic;
+            }
+            else
+            {
+                throw new Exception($"{xmlPath}不存在！");
+            }
         }
     }
 }
