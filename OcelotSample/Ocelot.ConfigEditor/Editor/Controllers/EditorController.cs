@@ -202,7 +202,7 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                     {
                         predicates.Add(pre.predicate.ToString());
                     }
-                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray(), isauthzation = false });
+                    list.Add(new { controllername = action.Key.controllerName, actionname = action.Key.actionName, predicates = predicates.ToArray(), isauthzation = true });
                 }
                 return new JsonResult(new { result = 1, data = list });
             }
@@ -240,6 +240,7 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                     _fileConfigRepo.Set(routes.Data);
                     _reload.AddReloadFlag();
                 }
+                _reload.ReloadConfig();
                 return new JsonResult(new { result = 1 });
             }
             catch (Exception exc)
