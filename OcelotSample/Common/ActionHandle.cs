@@ -18,12 +18,14 @@ namespace Common
         public static ActionMessage[] GetActions()
         {
             var assembly = Assembly.GetEntryAssembly();
+            //获取注释到字典中
+            var dic = GetXML(assembly.Location);
             var actions = new List<ActionMessage>();
             foreach (var type in assembly.GetTypes())
             {
                 if (typeof(Controller).IsAssignableFrom(type))
                 {
-                    actions.AddRange(GetActionNames(type));
+                    actions.AddRange(GetActionNames(type,dic));
                 }
             }
             return actions.ToArray();
@@ -33,9 +35,9 @@ namespace Common
         /// </summary>
         /// <param name="type">controller类型</param>
         /// <returns></returns>
-        static ActionMessage[] GetActionNames(Type type)
+        static ActionMessage[] GetActionNames(Type type,Dictionary<string,string> dic)
         {
-            var dic = GetXML();
+          
             var list = new List<ActionMessage>();
             var controllerName = type.Name.ToLower();
             var apiname = "";
@@ -48,13 +50,14 @@ namespace Common
             }
             foreach (var method in type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
             {
+                //拼装xml，把action的测试拼装成xml注释中的格式
                 var fullMethodName = $"M:{method.DeclaringType.FullName}.{method.Name}(";
                 foreach (var par in method.GetParameters())
                 {
                     fullMethodName += $"{par.ParameterType.FullName},";
                 }
                 fullMethodName = $"{fullMethodName.TrimEnd(',')})";
-
+                //查看是否包含对应的注释，存在取出对应注释内容
                 var commentaries = dic.ContainsKey(fullMethodName) ? dic[fullMethodName] : "";
                 var count = list.Count;
                 foreach (var att in method.GetCustomAttributes(false))
@@ -144,13 +147,13 @@ namespace Common
             return list.ToArray();
         }
         /// <summary>
-        /// 获取方法注释
+        /// 获取方法注释，要求在项属性中设置生成xml
         /// </summary>
         /// <returns></returns>
-        private static Dictionary<string, string> GetXML()
-        {
-            var assembly = Assembly.GetEntryAssembly();
-            var xmlPath = assembly.Location.Replace(".dll", ".xml");
+        private static Dictionary<string, string> GetXML(string dllPath)
+        {           
+            var xmlPath = dllPath.Replace(".dll", ".xml");
+            //查看对应的
             if (System.IO.File.Exists(xmlPath))
             {
                 var xml = new XmlDocument();
@@ -161,6 +164,7 @@ namespace Common
                 foreach (XmlNode node in nodes)
                 {
                     var xmlDoc = node.Attributes[0].Value;
+                    //方法是以M开头的
                     if (xmlDoc.StartsWith("M:"))
                     {
                         var des = node.SelectNodes("summary")[0].InnerText;
