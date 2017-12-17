@@ -38,8 +38,8 @@ namespace Common
         static ActionMessage[] GetActionNames(Type type,Dictionary<string,string> dic)
         {
           
-            var list = new List<ActionMessage>();
             var controllerName = type.Name.ToLower();
+            //获取Controller上的RouteAttribute特性
             var apiname = "";
             foreach (var att in type.GetCustomAttributes(false))
             {
@@ -48,6 +48,9 @@ namespace Common
                     apiname = (att as RouteAttribute).Template.ToLower().TrimStart('/').Replace("[controller]", controllerName.Replace("controller", ""));
                 }
             }
+
+            var list = new List<ActionMessage>();
+            //获取Action对应的路由
             foreach (var method in type.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
             {
                 //拼装xml，把action的测试拼装成xml注释中的格式
@@ -60,6 +63,7 @@ namespace Common
                 //查看是否包含对应的注释，存在取出对应注释内容
                 var commentaries = dic.ContainsKey(fullMethodName) ? dic[fullMethodName] : "";
                 var count = list.Count;
+                //分类action上特性的类型
                 foreach (var att in method.GetCustomAttributes(false))
                 {
                     if (att is RouteAttribute && (att as RouteAttribute).Template != null)
@@ -153,7 +157,7 @@ namespace Common
         private static Dictionary<string, string> GetXML(string dllPath)
         {           
             var xmlPath = dllPath.Replace(".dll", ".xml");
-            //查看对应的
+            //查看xml是否存在
             if (System.IO.File.Exists(xmlPath))
             {
                 var xml = new XmlDocument();
