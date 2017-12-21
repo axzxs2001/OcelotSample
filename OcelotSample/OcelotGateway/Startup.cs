@@ -71,14 +71,9 @@ namespace OcelotGateway
                 //    .Build();
                 //services.AddHealth(healthmetrics);
                 //services.AddHealthEndpoints();
-
             }
 
-
-
             #endregion
-
-
 
             var audienceConfig = Configuration.GetSection("Audience");
             //注入OcelotJwtBearer
@@ -102,8 +97,7 @@ namespace OcelotGateway
                 //健康监控相关
                 //app.UseHealthAllEndpoints();
                 //app.UsePingEndpoint();
-                //app.UseHealthEndpoint();
-
+                //app.UseHealthEndpoint();        
             }
             #endregion
             app.UseStaticFiles();
