@@ -7,11 +7,16 @@
   <ItemGroup>
     <PackageReference Include="App.Metrics" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.AspNetCore.Endpoints" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.AspNetCore.Health.Endpoints" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.AspNetCore.Tracking" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.Health" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.Health.Checks.Http" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.Health.Checks.Network" Version="2.0.0-alpha" />
+    <PackageReference Include="App.Metrics.Health.Checks.Process" Version="2.0.0-alpha" />
     <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="2.0.0-alpha" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Ocelot" Version="2.1.0-unstable0041" />
+    <PackageReference Include="Ocelot" Version="2.1.0-unstable0042" />
   </ItemGroup>
 
   <ItemGroup>

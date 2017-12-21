@@ -20,7 +20,7 @@ namespace LisAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Lis用户服务", "保存用户" };
+            return new string[] { "Lis用户服务", "所在服务器："+ Environment.MachineName +" OS:"+Environment.OSVersion.VersionString};
         }
 
         // GET api/values/5
@@ -90,8 +90,16 @@ namespace LisAPI.Controllers
                 Message = "Lis你无权限访问"
             });
         }
-
-
+        /// <summary>
+        /// 健康检查
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("/health")]
+        public IActionResult Health()
+        {
+            return Content("健康检查：正常");
+        }
     }
 
     /// <summary>

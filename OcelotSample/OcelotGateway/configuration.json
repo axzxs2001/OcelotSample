@@ -7,6 +7,9 @@
       "DownstreamPort": 5002,
       "UpstreamPathTemplate": "/lisapi/lisuser",
       "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "ReRouteIsCaseSensitive": false,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -29,6 +32,9 @@
       "DownstreamPort": 5002,
       "UpstreamPathTemplate": "/index.html",
       "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "ReRouteIsCaseSensitive": false,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -51,6 +57,9 @@
       "DownstreamHost": "localhost",
       "UpstreamPathTemplate": "/lisapi/denied",
       "UpstreamHttpMethod": [ "Get" ],
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
@@ -66,6 +75,9 @@
       "DownstreamHost": "localhost",
       "UpstreamPathTemplate": "/",
       "UpstreamHttpMethod": [ "Get" ],
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
@@ -81,6 +93,9 @@
       "DownstreamHost": "localhost",
       "UpstreamPathTemplate": "/lisapi/docs/",
       "UpstreamHttpMethod": [ "Get" ],
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
@@ -159,5 +174,11 @@
       "AuthenticationOptions": {
       }
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500
+    }
+  }
 }

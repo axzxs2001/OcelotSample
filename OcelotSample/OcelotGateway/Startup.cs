@@ -9,8 +9,13 @@ using App.Metrics;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.ConfigEditor;
 
+using App.Metrics.Health;
+using System.Reflection;
+
+
 namespace OcelotGateway
 {
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -59,7 +64,18 @@ namespace OcelotGateway
                 services.AddMetricsTrackingMiddleware();
                 services.AddMetricsEndpoints();
 
+                //健康监控相关
+                //var healthmetrics = AppMetricsHealth.CreateDefaultBuilder()
+                //    .HealthChecks.AddProcessPhysicalMemoryCheck("process", (2048L * 1024L) * 1024L)
+                //    .HealthChecks.AddPingCheck("ping", "baidu.com", TimeSpan.FromSeconds(5))
+                //    .Build();
+                //services.AddHealth(healthmetrics);
+                //services.AddHealthEndpoints();
+
             }
+
+
+
             #endregion
 
 
@@ -69,7 +85,7 @@ namespace OcelotGateway
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
 
             //注入Ocelot
-            services.AddOcelot(Configuration as ConfigurationRoot);
+            services.AddOcelot(Configuration as ConfigurationRoot);//.AddStoreOcelotConfigurationInConsul();
             services.AddOcelotConfigEditor();
         }
 
@@ -82,6 +98,12 @@ namespace OcelotGateway
             {
                 app.UseMetricsAllMiddleware();
                 app.UseMetricsAllEndpoints();
+
+                //健康监控相关
+                //app.UseHealthAllEndpoints();
+                //app.UsePingEndpoint();
+                //app.UseHealthEndpoint();
+
             }
             #endregion
             app.UseStaticFiles();

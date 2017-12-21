@@ -13,7 +13,7 @@ namespace TestClient
         /// <summary>
         /// 访问Url
         /// </summary>
-        static string _url = "http://dotnetcoresample.service.consul:5000";
+        static string _url = "http://127.0.0.1:5000";
         static void Main(string[] args)
         {
 
