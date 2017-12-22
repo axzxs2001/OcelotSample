@@ -8,7 +8,7 @@
       "UpstreamPathTemplate": "/lisapi/lisuser",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "ServiceName": "lisapi",
-      "LoadBalancer": "LeastConnection",
+      "LoadBalancer": "RoundRobin",
       "UseServiceDiscovery": true,
       "ReRouteIsCaseSensitive": false,
       "QoSOptions": {
