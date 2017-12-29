@@ -59,7 +59,16 @@ namespace HisAPI.Controllers
                 Status = false,
                 Message = "His你无权限访问"
             });
-        }    
+        }
+       // [AllowAnonymous]
+        [HttpPost("/abc")]
+        public IActionResult ABC()
+        {
+            var bytes = new byte[10240];
+            var i = Request.Body.ReadAsync(bytes, 0, bytes.Length);
+           var content= System.Text.Encoding.UTF8.GetString(bytes).Trim('\0');
+            return Ok();
+        }
     }
 
 }
