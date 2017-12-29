@@ -20,7 +20,7 @@ namespace LisAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Lis用户服务", "所在服务器："+ Environment.MachineName +" OS:"+Environment.OSVersion.VersionString};
+            return new string[] { "Lis用户服务"+DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss"), "所在服务器："+ Environment.MachineName +" OS:"+Environment.OSVersion.VersionString};
         }
 
         // GET api/values/5
