@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txbQuery = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +54,7 @@
             // 
             // btnQuery
             // 
-            this.btnQuery.Location = new System.Drawing.Point(465, 16);
+            this.btnQuery.Location = new System.Drawing.Point(756, 15);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(75, 23);
             this.btnQuery.TabIndex = 1;
@@ -62,6 +64,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.txbQuery);
             this.panel1.Controls.Add(this.txbPassword);
             this.panel1.Controls.Add(this.txbUserName);
             this.panel1.Controls.Add(this.label2);
@@ -119,6 +123,23 @@
             this.dataGridView1.Size = new System.Drawing.Size(880, 508);
             this.dataGridView1.TabIndex = 3;
             // 
+            // txbQuery
+            // 
+            this.txbQuery.Location = new System.Drawing.Point(518, 17);
+            this.txbQuery.Name = "txbQuery";
+            this.txbQuery.Size = new System.Drawing.Size(219, 21);
+            this.txbQuery.TabIndex = 6;
+            this.txbQuery.Text = "amxl";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(471, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "搜索：";
+            // 
             // frmTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -145,6 +166,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txbQuery;
     }
 }
 

@@ -47,9 +47,7 @@ namespace TestDesktop
             Query(delegate (dynamic json)
             {
                 dataGridView1.DataSource = json;
-
             }).GetAwaiter();
-
         }
         async Task Query(Action<dynamic> act)
         {
@@ -57,7 +55,7 @@ namespace TestDesktop
             cfg.HttpHost = new Uri("http://127.0.0.1:5000");
             cfg.GlobalFilters.Add(new GlobalFilter(token.token_type + " " + token.access_token));
             var myWebApi = HttpApiClient.Create<MyWebApi>(cfg);
-            var json = await myWebApi.Query("amx");
+            var json = await myWebApi.Query(txbQuery.Text);
             myWebApi.Dispose();
             act(json);
         }
