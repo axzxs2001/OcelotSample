@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDesktop", "TestDesktop\TestDesktop.csproj", "{9000E8B5-067B-4485-AA45-939675494C8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient", "WebApiClient\WebApiClient.csproj", "{EEC34AD3-65FC-490A-9CCE-CEBCB1716E32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDesktop02", "TestDesktop02\TestDesktop02.csproj", "{3252A3F8-0ECC-4843-A4B6-D159BB268981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +97,10 @@ Global
 		{9000E8B5-067B-4485-AA45-939675494C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9000E8B5-067B-4485-AA45-939675494C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9000E8B5-067B-4485-AA45-939675494C8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEC34AD3-65FC-490A-9CCE-CEBCB1716E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEC34AD3-65FC-490A-9CCE-CEBCB1716E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEC34AD3-65FC-490A-9CCE-CEBCB1716E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEC34AD3-65FC-490A-9CCE-CEBCB1716E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3252A3F8-0ECC-4843-A4B6-D159BB268981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3252A3F8-0ECC-4843-A4B6-D159BB268981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3252A3F8-0ECC-4843-A4B6-D159BB268981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3252A3F8-0ECC-4843-A4B6-D159BB268981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
