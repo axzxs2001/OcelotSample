@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebApiClient;
 using WebApiClient.Attributes;
+using WebApiClient.Contexts;
+using WebApiClient.Interfaces;
 
 namespace TestDesktop
 {
@@ -19,23 +21,60 @@ namespace TestDesktop
         {
             InitializeComponent();
         }
-
+        Result token;
         private void butLogin_Click(object sender, EventArgs e)
         {
+            Login(delegate (Result r)
+            {
+                MessageBox.Show(r.access_token);
+                token = r;
+            }).GetAwaiter();
+        }
 
-            var myWebApi = HttpApiClient.Create<MyWebApi>();
-            var userStr = myWebApi.Login(new User { UserName = txbUserName.Text, Password = txbPassword.Text }).GetAwaiter().GetResult();
+        async Task Login(Action<Result> act)
+        {
+            var cfg = new HttpApiConfig();
+            cfg.HttpHost = new Uri("http://127.0.0.1:5000");
+            var myWebApi = HttpApiClient.Create<MyWebApi>(cfg);
+            var userStr = await myWebApi.Login(new User { UserName = txbUserName.Text, Password = txbPassword.Text });
             myWebApi.Dispose();
-            MessageBox.Show(userStr);
+            act(userStr);
+        }
+
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            Query(delegate (dynamic json)
+            {
+                dataGridView1.DataSource = json;
+
+            }).GetAwaiter();
+
+        }
+        async Task Query(Action<dynamic> act)
+        {
+            var cfg = new HttpApiConfig();
+            cfg.HttpHost = new Uri("http://127.0.0.1:5000");
+            cfg.GlobalFilters.Add(new GlobalFilter(token.token_type + " " + token.access_token));
+            var myWebApi = HttpApiClient.Create<MyWebApi>(cfg);
+            var json = await myWebApi.Query("amx");
+            myWebApi.Dispose();
+            act(json);
         }
     }
-    [HttpHost("http://127.0.0.1:5000")]
 
+
+
+    #region 辅助类
     public interface MyWebApi : IDisposable
     {
-    
+
         [HttpPost("/authapi/login")]
-        ITask<string> Login(User user);
+        ITask<Result> Login(User user);
+
+
+        [HttpGet("/hisapi/getfeeitems")]
+        ITask<dynamic> Query(string name);
     }
 
     public class Result
@@ -55,4 +94,27 @@ namespace TestDesktop
 
     }
 
+    public class GlobalFilter : IApiActionFilter
+    {
+        string _token;
+        public GlobalFilter(string token)
+        {
+            _token = token;
+        }
+        public Task OnBeginRequestAsync(ApiActionContext context)
+        {
+            context.RequestMessage.Headers.Add("Authorization", _token);
+            return Task.CompletedTask;
+        }
+
+        public Task OnEndRequestAsync(ApiActionContext context)
+        {
+            return Task.CompletedTask;
+            //throw new NotImplementedException();
+        }
+
+
+    }
+
+    #endregion
 }

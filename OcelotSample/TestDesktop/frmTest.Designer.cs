@@ -58,6 +58,7 @@
             this.btnQuery.TabIndex = 1;
             this.btnQuery.Text = "查询";
             this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
             // 
             // panel1
             // 
@@ -112,10 +113,10 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 59);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(880, 567);
+            this.dataGridView1.Size = new System.Drawing.Size(880, 508);
             this.dataGridView1.TabIndex = 3;
             // 
             // frmTest
@@ -123,8 +124,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 567);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.panel1);
             this.Name = "frmTest";
             this.Text = "frmTest";
             this.panel1.ResumeLayout(false);
