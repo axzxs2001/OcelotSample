@@ -14,6 +14,11 @@ namespace LisAPI
     {
         public static void Main(string[] args)
         {
+           
+            foreach (var s in args)
+            {
+                Console.WriteLine("args参数:"+s);
+            }
             Console.Title = "ListAPI";
             BuildWebHost(args).Run();
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Common;
 using ConsulSharp.KV;
+using Microsoft.Extensions.Configuration;
 
 namespace LisAPI.Controllers
 {
@@ -13,6 +14,12 @@ namespace LisAPI.Controllers
     [Route("lisapi/[controller]")]
     public class LisUserController : Controller
     {
+        string _ip;
+        public LisUserController(IConfiguration configuration)
+        {
+            ((configuration as ConfigurationRoot).Providers.ToList()[4]).TryGet("a", out _ip);
+        }
+
         // GET api/values
         /// <summary>
         /// 查询
@@ -88,7 +95,7 @@ namespace LisAPI.Controllers
         {
             try
             {
-                var kvGovern = new KVGovern();
+                var kvGovern = new KVGovern($"http://{_ip}:8500");
                 var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "lisconnectionstring" }).GetAwaiter().GetResult();
                 return new JsonResult(new
                 {
