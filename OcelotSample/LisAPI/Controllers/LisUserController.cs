@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Common;
+using ConsulSharp.KV;
 
 namespace LisAPI.Controllers
 {
@@ -85,11 +86,25 @@ namespace LisAPI.Controllers
         [HttpGet("/lisapi/denied")]
         public IActionResult Denied()
         {
-            return new JsonResult(new
+            try
             {
-                Status = false,
-                Message = "Lis你无权限访问"
-            });
+                var kvGovern = new KVGovern();
+                var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "lisconnectionstring" }).GetAwaiter().GetResult();
+                return new JsonResult(new
+                {
+                    Status = false,
+                    Message = "Lis你无权限访问" + result?[0]?.DecodeValue
+                });
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("异常："+exc.Message);
+                return new JsonResult(new
+                {
+                    Status = false,
+                    Message = "Lis你无权限访问"
+                });
+            }
         }
         /// <summary>
         /// 健康检查
