@@ -16,7 +16,7 @@ namespace HisAPI.Controllers
     {
         IFeeItemRepository _feeItemRepository;
         public FeeItemController(IFeeItemRepository feeItemRepository)
-        {
+        {           
             _feeItemRepository = feeItemRepository;
         }
         [HttpGet("/hisapi/getfeeitems")]
