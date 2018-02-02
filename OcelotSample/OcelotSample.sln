@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotGateway", "OcelotGateway\OcelotGateway.csproj", "{B635DB1F-DCAF-48A7-8720-0F66E0EB96A8}"
 EndProject
@@ -39,7 +39,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDesktop", "TestDesktop\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDesktop02", "TestDesktop02\TestDesktop02.csproj", "{3252A3F8-0ECC-4843-A4B6-D159BB268981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationAPI", "ConfigurationAPI\ConfigurationAPI.csproj", "{48988B6D-F841-43A3-9106-A654F9EAE69D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigurationAPI", "ConfigurationAPI\ConfigurationAPI.csproj", "{48988B6D-F841-43A3-9106-A654F9EAE69D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControlPanel", "ServiceControlPanel\ServiceControlPanel.csproj", "{0C45AA9D-21C0-400D-B2A0-279EEF88DDC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,10 @@ Global
 		{48988B6D-F841-43A3-9106-A654F9EAE69D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48988B6D-F841-43A3-9106-A654F9EAE69D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48988B6D-F841-43A3-9106-A654F9EAE69D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C45AA9D-21C0-400D-B2A0-279EEF88DDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C45AA9D-21C0-400D-B2A0-279EEF88DDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C45AA9D-21C0-400D-B2A0-279EEF88DDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C45AA9D-21C0-400D-B2A0-279EEF88DDC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

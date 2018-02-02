@@ -1,0 +1,1 @@
+﻿docker run -it -p 5002:5002 --name lisapi lisapi

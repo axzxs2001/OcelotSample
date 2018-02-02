@@ -1,0 +1,25 @@
+﻿{
+  "width": 185,
+  "height": 90,
+  "buttons": [
+    {
+      "Name": "consul",
+      "StartText": "启动Consul服务",
+      "StopText": "停止Consul服务",
+      "StartImage": "images\\consul80.png",
+      "StopImage": "images\\consulstop80.png",
+      "cmd": "cmd\\consul.bat",
+      "Type": "consul"
+    },
+    {
+      "Name": "lisapi",
+      "StartText": "启动Lis服务",
+      "StopText": "停止Lis服务",
+      "StartImage": "images\\docker80.png",
+      "StopImage": "images\\dockerstop80.png",
+      "cmd": "cmd\\lisapi.bat",
+      "Type": "docker"
+    }
+  ]
+
+}
