@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationProcess.cs" />
+    <Compile Include="DotnetlProcess.cs" />
     <Compile Include="ConsulProcess.cs" />
     <Compile Include="DockerProcess.cs" />
     <Compile Include="frmMainPanel.cs">
