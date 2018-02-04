@@ -44,10 +44,10 @@ namespace ServiceControlPanel
         {
             string name = btnCfg.Name.ToString();
             string file = $"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.cmd}";
-            var arg = File.ReadAllText(file).Replace("consul", "").Replace("./", $@"{AppDomain.CurrentDomain.BaseDirectory}consul\").Trim();
+            var arg = File.ReadAllText(file).Replace("donet", "").Replace("./", $@"{AppDomain.CurrentDomain.BaseDirectory}consul\").Trim();
             var proc = new Process();
             //设置要启动的应用程序
-            proc.StartInfo.FileName = $@"{AppDomain.CurrentDomain.BaseDirectory}consul\consul.exe";
+            proc.StartInfo.FileName = $@"dotnet";
             proc.StartInfo.Arguments = arg;
             proc.Start();
             _proDic.Add(name, proc);
