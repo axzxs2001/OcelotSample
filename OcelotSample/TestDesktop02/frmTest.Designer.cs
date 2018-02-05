@@ -149,6 +149,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "frmTest";
             this.Text = "frmTest";
+            this.Load += new System.EventHandler(this.frmTest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

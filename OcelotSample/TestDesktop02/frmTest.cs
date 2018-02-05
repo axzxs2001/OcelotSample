@@ -40,6 +40,11 @@ namespace TestDesktop02
         {
             dataGridView1.DataSource = _testAPI.Query(txbQuery.Text).GetAwaiter().GetResult();
         }
+
+        private void frmTest_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

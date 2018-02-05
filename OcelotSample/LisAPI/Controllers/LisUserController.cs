@@ -17,7 +17,7 @@ namespace LisAPI.Controllers
         string _ip;
         public LisUserController(IConfiguration configuration)
         {
-            ((configuration as ConfigurationRoot).Providers.ToList()[4]).TryGet("a", out _ip);
+           // ((configuration as ConfigurationRoot).Providers.ToList()[4]).TryGet("a", out _ip);
         }
 
         // GET api/values

@@ -14,18 +14,19 @@ namespace LisAPI
     {
         public static void Main(string[] args)
         {
-           
-            foreach (var s in args)
-            {
-                Console.WriteLine("args参数:"+s);
-            }
+
+            Console.WriteLine(args?.Length);
+            //foreach (var s in args)
+            //{
+            //    Console.WriteLine("args参数:"+s);
+            //}
             Console.Title = "ListAPI";
             BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-             .UseUrls("http://*:5002")
+             .UseUrls("http://*:5002")          
                 .UseStartup<Startup>()
                 .Build();
     }

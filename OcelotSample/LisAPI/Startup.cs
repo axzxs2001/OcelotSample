@@ -25,8 +25,6 @@ namespace LisAPI
     {
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-
-
             Configuration = configuration;
         }
 
@@ -34,7 +32,6 @@ namespace LisAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-
      
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
