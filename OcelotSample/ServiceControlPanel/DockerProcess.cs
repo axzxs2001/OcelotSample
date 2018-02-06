@@ -26,23 +26,21 @@ namespace ServiceControlPanel
         public override void StopProcess(dynamic btnCfg)
         {
             var name = btnCfg.Name.ToString();
-            if (MessageBox.Show($"退出后服务会停止，你确定要退出{name}?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            var proc = _proDic[name] as Process;
+            if (!proc.HasExited)
             {
-                var proc = _proDic[name] as Process;
-                if (!proc.HasExited)
-                {
-                    proc.Kill();
-                    proc.Close();
+                proc.Kill();
+                proc.Close();
 
-                    var newproc = new Process();
-                    //设置要启动的应用程序
-                    newproc.StartInfo.FileName = $@"docker";
-                    newproc.StartInfo.Arguments = $"rm -f {name}";
-                    newproc.Start();
-                    newproc.Close();
-                }
-                _proDic.Remove(name);
+                var newproc = new Process();
+                //设置要启动的应用程序
+                newproc.StartInfo.FileName = $@"docker";
+                newproc.StartInfo.Arguments = $"rm -f {name}";
+                newproc.Start();
+                newproc.Close();
             }
+            _proDic.Remove(name);
+
         }
         /// <summary>
         /// 开始Docker进程

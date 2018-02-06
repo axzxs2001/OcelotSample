@@ -3,6 +3,15 @@
   "height": 90,
   "buttons": [
     {
+      "Name": "All",
+      "StartText": "启动所有服务",
+      "StopText": "停止所有服务",
+      "StartImage": "images\\all80.png",
+      "StopImage": "images\\allstop80.png",
+      "cmd": "",
+      "Type": "all"
+    },
+    {
       "Name": "consul",
       "StartText": "启动Consul服务",
       "StopText": "停止Consul服务",
@@ -12,13 +21,22 @@
       "Type": "consul"
     },
     {
-      "Name": "lisapi",
+      "Name": "lisapidocker",
       "StartText": "启动Lis服务",
       "StopText": "停止Lis服务",
       "StartImage": "images\\docker80.png",
       "StopImage": "images\\dockerstop80.png",
       "cmd": "cmd\\lisapi.bat",
       "Type": "docker"
+    },
+    {
+      "Name": "lisapi",
+      "StartText": "启动Lis服务",
+      "StopText": "停止Lis服务",
+      "StartImage": "images\\dotnet80.png",
+      "StopImage": "images\\dotnetstop80.png",
+      "cmd": "cmd\\lisapidll.bat",
+      "Type": "dotnet"
     }
   ]
 

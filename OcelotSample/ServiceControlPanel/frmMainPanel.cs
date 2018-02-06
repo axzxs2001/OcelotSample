@@ -70,7 +70,17 @@ namespace ServiceControlPanel
                         left = split;
                     }
                     #endregion
+
+                    //加载button
                     var btn = CreateButton(btnCfg, cfg, top, left);
+                    //加载checkbox
+                    if (btnCfg.Type?.ToString().ToLower() != "all")
+                    {
+                        var checkBox = CreateCheckBox(btnCfg, cfg, top, left);
+                        checkBox.Tag = btn;
+                        tabPageStartUp.Controls.Add(checkBox);
+                    }
+
                     widthCount++;
                     tabPageStartUp.Controls.Add(btn);
                 }
@@ -81,6 +91,25 @@ namespace ServiceControlPanel
             }
         }
         /// <summary>
+        /// 创建CheckBox
+        /// </summary>
+        /// <param name="cfg">全局配置文件</param>
+        /// <param name="top">按钮上边距</param>
+        /// <param name="left">按钮左边距</param>
+        /// <returns></returns>
+        CheckBox CreateCheckBox(dynamic btnCfg, dynamic cfg, int top, int left)
+        {
+            var checkBox = new CheckBox();
+            checkBox.Name = $"chk_{btnCfg.Type}_{btnCfg.Name}";
+            checkBox.Text = "";
+            checkBox.BackColor = Color.Transparent;
+            checkBox.Width = 15;
+            checkBox.Height = 14;
+            checkBox.Top = top + 4;
+            checkBox.Left = left + Convert.ToInt32(cfg.width) - checkBox.Width - 4;
+            return checkBox;
+        }
+        /// <summary>
         /// 创建按钮
         /// </summary>
         /// <param name="btnCfg">按钮配置文件</param>
@@ -88,9 +117,10 @@ namespace ServiceControlPanel
         /// <param name="top">按钮上边距</param>
         /// <param name="left">按钮左边距</param>
         /// <returns></returns>
-        Button CreateButton(dynamic btnCfg,dynamic cfg,int top,int left)
+        Button CreateButton(dynamic btnCfg, dynamic cfg, int top, int left)
         {
             var btn = new Button();
+            btn.Name = $"btn_{btnCfg.Type}_{btnCfg.Name}";
             btn.Top = top;
             btn.Left = left;
             btn.FlatStyle = FlatStyle.Popup;
@@ -99,7 +129,7 @@ namespace ServiceControlPanel
             btn.Height = cfg.height;
             btn.Font = new Font("微软雅黑", 12, FontStyle.Bold);
             btn.ImageAlign = ContentAlignment.MiddleLeft;
-            btn.Tag = false;
+            btn.Tag = new { state = false, allclick = false };
             btn.Text = btnCfg.StartText;
             btn.Image = Image.FromFile($"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.StopImage}");
             //设置按钮事件
@@ -117,14 +147,31 @@ namespace ServiceControlPanel
                     case "dotnet":
                         proc = new DotnetProcess(_proDic);
                         break;
+                    case "all":
+                        proc = new AllProcess(_proDic, tabPageStartUp);
+                        break;
                     default:
                         return;
                 }
-                if ((bool)((Button)btnsender).Tag)
+                if ((bool)(((Button)btnsender).Tag as dynamic).state)
                 {
-                    proc.StopProcess(btnCfg);
-                    btn.Text = btnCfg.StartText;
-                    btn.Image = Image.FromFile($"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.StopImage}");
+                    if ((((Button)btnsender).Tag as dynamic).allclick)
+                    {
+                        proc.StopProcess(btnCfg);
+                        btn.Text = btnCfg.StartText;
+                        btn.Image = Image.FromFile($"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.StopImage}");
+                        ((Button)btnsender).Tag = new { state = (((Button)btnsender).Tag as dynamic).state, allclick = false };
+                    }
+                    else
+                    {
+                        var name = btnCfg.Name.ToString();
+                        if (MessageBox.Show($"退出后服务会停止，你确定要退出{name}?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            proc.StopProcess(btnCfg);
+                            btn.Text = btnCfg.StartText;
+                            btn.Image = Image.FromFile($"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.StopImage}");
+                        }
+                    }
                 }
                 else
                 {
@@ -132,7 +179,7 @@ namespace ServiceControlPanel
                     btn.Image = Image.FromFile($"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.StartImage}");
                     proc.StartProcess(btnCfg);
                 }
-               ((Button)btnsender).Tag = !(bool)((Button)btnsender).Tag;
+                ((Button)btnsender).Tag = new { state = !(bool)(((Button)btnsender).Tag as dynamic).state, allclick = false };
             };
             return btn;
         }

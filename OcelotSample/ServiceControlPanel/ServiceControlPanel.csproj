@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllProcess.cs" />
     <Compile Include="ApplicationProcess.cs" />
     <Compile Include="ConsulProcess.cs" />
     <Compile Include="DockerProcess.cs" />

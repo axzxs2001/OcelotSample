@@ -25,16 +25,14 @@ namespace ServiceControlPanel
         public override void StopProcess(dynamic btnCfg)
         {
             string name = btnCfg.Name.ToString();
-            if (MessageBox.Show($"退出后服务会停止，你确定要退出{name}?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            var proc = _proDic[name] as Process;
+            if (!proc.HasExited)
             {
-                var proc = _proDic[name] as Process;
-                if (!proc.HasExited)
-                {
-                    proc.Kill();
-                    proc.Close();
-                }
-                _proDic.Remove(name);
+                proc.Kill();
+                proc.Close();
             }
+            _proDic.Remove(name);
+
         }
         /// <summary>
         /// 启动Consul进程

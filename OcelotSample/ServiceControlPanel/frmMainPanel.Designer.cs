@@ -31,7 +31,9 @@
             this.tabC = new System.Windows.Forms.TabControl();
             this.tabPageStartUp = new System.Windows.Forms.TabPage();
             this.tabPageConfigurationCenter = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabC.SuspendLayout();
+            this.tabPageStartUp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabC
@@ -51,6 +53,7 @@
             // 
             // tabPageStartUp
             // 
+            this.tabPageStartUp.Controls.Add(this.button1);
             this.tabPageStartUp.Location = new System.Drawing.Point(22, 4);
             this.tabPageStartUp.Name = "tabPageStartUp";
             this.tabPageStartUp.Padding = new System.Windows.Forms.Padding(3);
@@ -69,6 +72,15 @@
             this.tabPageConfigurationCenter.Text = "配置中心";
             this.tabPageConfigurationCenter.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(605, 318);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // frmMainPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -84,6 +96,7 @@
             this.Load += new System.EventHandler(this.frmMainPanel_Load);
             this.Resize += new System.EventHandler(this.frmMainPanel_Resize);
             this.tabC.ResumeLayout(false);
+            this.tabPageStartUp.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -93,6 +106,7 @@
         private System.Windows.Forms.TabControl tabC;
         private System.Windows.Forms.TabPage tabPageStartUp;
         private System.Windows.Forms.TabPage tabPageConfigurationCenter;
+        private System.Windows.Forms.Button button1;
     }
 }
 
