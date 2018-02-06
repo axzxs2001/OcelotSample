@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace ServiceControlPanel
 {
+
     /// <summary>
     /// asp.net core进程
     /// </summary>
@@ -28,8 +29,19 @@ namespace ServiceControlPanel
             if (MessageBox.Show($"退出后服务会停止，你确定要退出{name}?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 var proc = _proDic[name] as Process;
-                if (!proc.HasExited)
+                if (proc != null && !proc.HasExited)
                 {
+                    var pid = proc.Id;
+                    //查询所有dotnet进程，父进程与守护进行相同的kill掉，并把守护进程kill掉
+                    foreach (var pro in Process.GetProcessesByName("dotnet"))
+                    {
+                        var childID = pro.Parent().Id;
+                        if (pid == childID)
+                        {
+                            pro.Kill();
+                            pro.Close();
+                        }
+                    }
                     proc.Kill();
                     proc.Close();
                 }
@@ -44,12 +56,20 @@ namespace ServiceControlPanel
         {
             string name = btnCfg.Name.ToString();
             string file = $"{AppDomain.CurrentDomain.BaseDirectory}{btnCfg.cmd}";
-            var arg = File.ReadAllText(file).Replace("donet", "").Replace("./", $@"{AppDomain.CurrentDomain.BaseDirectory}consul\").Trim();
+            var arg = File.ReadAllText(file);
             var proc = new Process();
             //设置要启动的应用程序
-            proc.StartInfo.FileName = $@"dotnet";
-            proc.StartInfo.Arguments = arg;
-            proc.Start();
+            proc.StartInfo.FileName = $@"cmd.exe";       
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardInput = true;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.Start();    
+            proc.StandardInput.WriteLine($"cd {btnCfg.Name}");
+            proc.StandardInput.WriteLine($"{arg}");
+            proc.StandardInput.AutoFlush = true;    
+            proc.StandardInput.WriteLine("pause");
             _proDic.Add(name, proc);
         }
     }

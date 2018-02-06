@@ -54,15 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationProcess.cs" />
-    <Compile Include="DotnetlProcess.cs" />
     <Compile Include="ConsulProcess.cs" />
     <Compile Include="DockerProcess.cs" />
+    <Compile Include="DotnetProcess.cs" />
     <Compile Include="frmMainPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMainPanel.Designer.cs">
       <DependentUpon>frmMainPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProcessExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmMainPanel.resx">
