@@ -98,13 +98,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\Add.png" />
+    <Content Include="images\All.png" />
+    <Content Include="images\All80.png" />
+    <Content Include="images\Allstop80.png" />
     <Content Include="images\Consul.png" />
+    <Content Include="images\Delete.png" />
     <Content Include="images\Docker80.png" />
     <Content Include="images\DockerStop80.png" />
     <Content Include="images\Docker.png" />
     <Content Include="images\dotnet.png" />
     <Content Include="images\dotnet80.png" />
     <Content Include="images\dotnetstop80.png" />
+    <Content Include="images\Modify.png" />
     <None Include="images\ConsulStop80.png" />
     <None Include="images\Consul80.png" />
   </ItemGroup>

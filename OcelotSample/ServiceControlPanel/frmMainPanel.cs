@@ -27,6 +27,18 @@ namespace ServiceControlPanel
         {
             _proDic = new Dictionary<string, Process>();
             LoadButton();
+
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            var kvGovern = new ConsulSharp.KV.KVGovern();
+            var readKeys = kvGovern.ReadKey(new ConsulSharp.KV.ReadKeyParmeter { DC = "dc1" }).GetAwaiter().GetResult();
+            foreach (var key in readKeys)
+            {
+                listKey.Items.Add(key.Key);
+            }
         }
 
         Dictionary<string, Process> _proDic;
@@ -187,6 +199,27 @@ namespace ServiceControlPanel
         private void frmMainPanel_Resize(object sender, EventArgs e)
         {
             LoadButton();
+        }
+
+        private void btnSava_Click(object sender, EventArgs e)
+        {
+            var kvGovern = new ConsulSharp.KV.KVGovern();
+            var result = kvGovern.CreateUpdateKey(new ConsulSharp.KV.CreateUpdateKeyParmeter { DC = "dc1", Key = txbKey.Text }, txbValue.Text).GetAwaiter().GetResult();
+            if (result.result && result.createUpdateResult)
+            {
+                MessageBox.Show("添加成功！");
+            }
+            else
+            {
+                MessageBox.Show("添加失败！");
+            }
+
+        }
+
+        private void listKey_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
         }
     }
 
