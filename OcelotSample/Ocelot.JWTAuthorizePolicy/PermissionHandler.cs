@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -71,9 +72,9 @@ namespace Ocelot.JWTAuthorizePolicy
                         //验证权限
                         if (_permissions.Where(w => w.Name == name && w.Url.ToLower() == questUrl).Count() == 0)
                         {
-                            //无权限跳转到拒绝页面   
-                            httpContext.Response.Redirect(requirement.DeniedAction);
-                            context.Succeed(requirement);
+                            //无权限跳转到拒绝页面 
+                            httpContext.Response.Headers.Add("error", requirement.DeniedAction);
+                            context.Fail();                     
                             return;
                         }
                     }

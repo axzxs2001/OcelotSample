@@ -114,7 +114,8 @@ namespace TestClient
             client.AddDefaultHeader("Authorization", tk);
             var request = new RestRequest("/lisapi/lisuser", Method.GET);
             IRestResponse response = client.Execute(request);
-            var content = response.Content; Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
+            var content = ((int)response.StatusCode)==401?response.Headers.FirstOrDefault(s=>s.Name=="error")?.Value?.ToString():response.Content;
+            Console.WriteLine($"状态码：{(int)response.StatusCode} 状态信息：{response.StatusCode}  返回结果：{content}");
         }
 
         static void WebHisUser(dynamic token)

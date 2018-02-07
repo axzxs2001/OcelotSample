@@ -31,11 +31,10 @@ namespace LisAPI
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-     
+        {     
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
-            services.AddOcelotPolicyJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer", "Permission", "/lisapi/denied");
+            services.AddOcelotPolicyJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer", "Permission", "no permission");
 
             //这个集合模拟用户权限表,可从数据库中查询出来
             var permission = new List<Permission> {

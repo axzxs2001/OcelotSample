@@ -95,12 +95,12 @@ namespace LisAPI.Controllers
         {
             try
             {
-                var kvGovern = new KVGovern($"http://{_ip}:8500");
-                var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "lisconnectionstring" }).GetAwaiter().GetResult();
+                //var kvGovern = new KVGovern($"http://{_ip}:8500");
+                //var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "lisconnectionstring" }).GetAwaiter().GetResult();
                 return new JsonResult(new
                 {
                     Status = false,
-                    Message = "Lis你无权限访问" + result?[0]?.DecodeValue
+                    Message = "Lis你无权限访问" 
                 });
             }
             catch (Exception exc)
