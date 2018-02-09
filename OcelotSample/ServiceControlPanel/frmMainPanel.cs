@@ -295,6 +295,11 @@ namespace ServiceControlPanel
             txbValue.Text = listKV.SelectedValue.ToString();
             txbKey.Text = listKV.Text;
         }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
 

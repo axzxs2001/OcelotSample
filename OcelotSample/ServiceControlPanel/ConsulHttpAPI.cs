@@ -50,6 +50,22 @@ namespace ServiceControlPanel
             return Newtonsoft.Json.JsonConvert.DeserializeObject<W>(json);
         }
         /// <summary>
+        /// Get请求
+        /// </summary>
+        /// <typeparam name="W">出参类型</typeparam>
+        /// <param name="url">url</param>
+        /// <returns></returns>
+        protected W Get<W>(string url)
+        {
+            var request = WebRequest.Create($@"{_baseUrl}/{_prefix}/{url}");
+            request.Method = "Get";
+            var stream = request.GetResponse().GetResponseStream();
+            var reader = new StreamReader(stream);
+            var json = reader.ReadToEnd();
+            reader.Close();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<W>(json);
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T">参数类型</typeparam>
@@ -80,7 +96,7 @@ namespace ServiceControlPanel
         /// <param name="url">url</param>
         /// <param name="parmeter">参数</param>
         /// <returns></returns>
-        protected W Put<T,W>(string url, T parmeter) where T : class, new()
+        protected W Put<T, W>(string url, T parmeter) where T : class, new()
         {
             var request = WebRequest.Create($@"{_baseUrl}/{_prefix}/{url}");
             request.Method = "Put";
@@ -96,6 +112,24 @@ namespace ServiceControlPanel
             reader.Close();
             return Newtonsoft.Json.JsonConvert.DeserializeObject<W>(json);
         }
+
+        /// <summary>
+        /// Pug
+        /// </summary>
+        /// <typeparam name="W">出参类型</typeparam>
+        /// <param name="url">url</param>
+        /// <returns></returns>
+        protected W Put<W>(string url) 
+        {
+            var request = WebRequest.Create($@"{_baseUrl}/{_prefix}/{url}");
+            request.Method = "Put";     
+            var responseStream = request.GetResponse().GetResponseStream();
+            var reader = new StreamReader(responseStream);
+            var json = reader.ReadToEnd();
+            reader.Close();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<W>(json);
+        }
+
         /// <summary>
         /// Put
         /// </summary>
@@ -103,12 +137,12 @@ namespace ServiceControlPanel
         /// <param name="url">url</param>
         /// <param name="value">参数</param>
         /// <returns></returns>
-        protected W Put<W>(string url, object value) 
+        protected W Put<W>(string url, object value)
         {
             var request = WebRequest.Create($@"{_baseUrl}/{_prefix}/{url}");
             request.Method = "Put";
             var requestStream = request.GetRequestStream();
-            var writer = new StreamWriter(requestStream);        
+            var writer = new StreamWriter(requestStream);
             writer.Write(value);
             writer.Flush();
             var responseStream = request.GetResponse().GetResponseStream();

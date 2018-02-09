@@ -53,6 +53,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent\AgentGovern.cs" />
+    <Compile Include="Agent\Check\Check.cs" />
+    <Compile Include="Agent\Check\DeregisterCheckParmeter.cs" />
+    <Compile Include="Agent\Check\DockerCheck.cs" />
+    <Compile Include="Agent\Check\HttpCheck.cs" />
+    <Compile Include="Agent\Check\ListChecks.cs" />
+    <Compile Include="Agent\Check\RegisterCheckParmeter.cs" />
+    <Compile Include="Agent\Check\ScriptCheck.cs" />
+    <Compile Include="Agent\Check\TcpCheck.cs" />
+    <Compile Include="Agent\Check\TTLCheck.cs" />
+    <Compile Include="Agent\Check\TTLCheckOpt.cs" />
+    <Compile Include="Agent\Check\TTLCheckUpdate.cs" />
+    <Compile Include="Agent\Config.cs" />
+    <Compile Include="Agent\Coord.cs" />
+    <Compile Include="Agent\Counter.cs" />
+    <Compile Include="Agent\Gauge.cs" />
+    <Compile Include="Agent\JoinAgent.cs" />
+    <Compile Include="Agent\ListMembersParmeter.cs" />
+    <Compile Include="Agent\Member.cs" />
+    <Compile Include="Agent\ReadConfigurationResult.cs" />
+    <Compile Include="Agent\Service\ListService.cs" />
+    <Compile Include="Agent\Service\RegisterServiceParmeter.cs" />
     <Compile Include="AllProcess.cs" />
     <Compile Include="ApplicationProcess.cs" />
     <Compile Include="ConsulHttpAPI.cs" />
@@ -118,6 +140,7 @@
     <Content Include="images\dotnet80.png" />
     <Content Include="images\dotnetstop80.png" />
     <Content Include="images\Modify.png" />
+    <Content Include="images\Query.png" />
     <None Include="images\ConsulStop80.png" />
     <None Include="images\Consul80.png" />
   </ItemGroup>
