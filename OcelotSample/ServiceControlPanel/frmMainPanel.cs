@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using ServiceControlPanel.KV;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,8 +9,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +35,20 @@ namespace ServiceControlPanel
 
         private void LoadConfig()
         {
-            var kvGovern = new ConsulSharp.KV.KVGovern();
-            var readKeys = kvGovern.ReadKey(new ConsulSharp.KV.ReadKeyParmeter { DC = "dc1" }).GetAwaiter().GetResult();
-            foreach (var key in readKeys)
+            try
             {
-                listKey.Items.Add(key.Key);
+                var kvGovern = new KVGovern();
+                var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "", Recurse = true });
+                listKV.DataSource = result;
+                listKV.DisplayMember = "Key";
+                listKV.ValueMember = "DecodeValue";
+                this.listKV.SelectedIndexChanged -= new System.EventHandler(this.listKV_SelectedIndexChanged);
+                this.listKV.SelectedIndexChanged += new System.EventHandler(this.listKV_SelectedIndexChanged);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+
             }
         }
 
@@ -201,25 +212,88 @@ namespace ServiceControlPanel
             LoadButton();
         }
 
+
         private void btnSava_Click(object sender, EventArgs e)
         {
-            var kvGovern = new ConsulSharp.KV.KVGovern();
-            var result = kvGovern.CreateUpdateKey(new ConsulSharp.KV.CreateUpdateKeyParmeter { DC = "dc1", Key = txbKey.Text }, txbValue.Text).GetAwaiter().GetResult();
-            if (result.result && result.createUpdateResult)
+            try
             {
-                MessageBox.Show("添加成功！");
+                var kvGovern = new KVGovern();
+                var result = kvGovern.CreateUpdateKey(new CreateUpdateKeyParmeter { DC = "dc1", Key = txbKey.Text, Value = txbValue.Text });
+                if (result)
+                {
+                    MessageBox.Show("添加成功!");
+                    txbKey.Clear();
+                    txbValue.Clear();
+                    LoadConfig();
+                }
+                else
+                {
+                    MessageBox.Show("添加失败!");
+                }
             }
-            else
+            catch (Exception exc)
             {
-                MessageBox.Show("添加失败！");
+                MessageBox.Show(exc.Message);
             }
 
         }
 
-        private void listKey_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var kvGovern = new KVGovern();
+                var result = kvGovern.CreateUpdateKey(new CreateUpdateKeyParmeter { DC = "dc1", Key = txbKey.Text, Value = txbValue.Text });
+                if (result)
+                {
+                    MessageBox.Show("修改成功!");
+                    txbKey.Clear();
+                    txbValue.Clear();
+                    LoadConfig();
+                }
+                else
+                {
+                    MessageBox.Show("修改失败!");
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
 
+        }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var kvGovern = new KVGovern();
+                var result = kvGovern.DeleteKey(new DeleteKeyParmeter { Key = txbKey.Text });
+                txbKey.Clear();
+                txbValue.Clear();
+                LoadConfig();
+                if (result)
+                {
+                    MessageBox.Show("删除成功!");
+                    txbKey.Clear();
+                    txbValue.Clear();
+                    LoadConfig();
+                }
+                else
+                {
+                    MessageBox.Show("删除失败!");
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void listKV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txbValue.Text = listKV.SelectedValue.ToString();
+            txbKey.Text = listKV.Text;
         }
     }
 

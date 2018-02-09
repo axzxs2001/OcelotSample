@@ -55,15 +55,22 @@
   <ItemGroup>
     <Compile Include="AllProcess.cs" />
     <Compile Include="ApplicationProcess.cs" />
+    <Compile Include="ConsulHttpAPI.cs" />
     <Compile Include="ConsulProcess.cs" />
     <Compile Include="DockerProcess.cs" />
     <Compile Include="DotnetProcess.cs" />
+    <Compile Include="FieldNameAttribute.cs" />
     <Compile Include="frmMainPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMainPanel.Designer.cs">
       <DependentUpon>frmMainPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="KV\CreateUpdateKeyParmeter.cs" />
+    <Compile Include="KV\DeleteKeyParmter.cs" />
+    <Compile Include="KV\KVGovern.cs" />
+    <Compile Include="KV\ReadKeyParmeter.cs" />
+    <Compile Include="KV\ReadKeyResult.cs" />
     <Compile Include="ProcessExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

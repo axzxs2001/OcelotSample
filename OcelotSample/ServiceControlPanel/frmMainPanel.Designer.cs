@@ -34,26 +34,23 @@
             this.tabPageStartUp = new System.Windows.Forms.TabPage();
             this.tabPageConfigurationCenter = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.listKey = new System.Windows.Forms.ListView();
+            this.listKV = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.txbValue = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txbKey = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
             this.imgListBtns = new System.Windows.Forms.ImageList(this.components);
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnSava = new System.Windows.Forms.Button();
-            this.txbKey = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabC.SuspendLayout();
             this.tabPageConfigurationCenter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,7 +98,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listKey);
+            this.splitContainer1.Panel1.Controls.Add(this.listKV);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             // 
             // splitContainer1.Panel2
@@ -110,39 +107,67 @@
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.txbKey);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
-            this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Size = new System.Drawing.Size(931, 568);
             this.splitContainer1.SplitterDistance = 291;
             this.splitContainer1.TabIndex = 3;
             // 
-            // listKey
+            // listKV
             // 
-            this.listKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listKey.Location = new System.Drawing.Point(0, 20);
-            this.listKey.Name = "listKey";
-            this.listKey.Size = new System.Drawing.Size(291, 548);
-            this.listKey.TabIndex = 0;
-            this.listKey.UseCompatibleStateImageBehavior = false;
-            this.listKey.SelectedIndexChanged += new System.EventHandler(this.listKey_SelectedIndexChanged);
+            this.listKV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listKV.FormattingEnabled = true;
+            this.listKV.ItemHeight = 12;
+            this.listKV.Location = new System.Drawing.Point(0, 20);
+            this.listKV.Name = "listKV";
+            this.listKV.Size = new System.Drawing.Size(291, 548);
+            this.listKV.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(291, 20);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "全部参数：";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txbValue
             // 
             this.txbValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txbValue.Location = new System.Drawing.Point(0, 128);
+            this.txbValue.Location = new System.Drawing.Point(0, 61);
             this.txbValue.Multiline = true;
             this.txbValue.Name = "txbValue";
-            this.txbValue.Size = new System.Drawing.Size(636, 377);
+            this.txbValue.Size = new System.Drawing.Size(636, 444);
             this.txbValue.TabIndex = 1;
             // 
-            // panel2
+            // label2
             // 
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(636, 67);
-            this.panel2.TabIndex = 3;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Location = new System.Drawing.Point(0, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(636, 20);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "全局参数值：";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txbKey
+            // 
+            this.txbKey.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txbKey.Location = new System.Drawing.Point(0, 20);
+            this.txbKey.Name = "txbKey";
+            this.txbKey.Size = new System.Drawing.Size(636, 21);
+            this.txbKey.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(636, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "全局参数键：";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel1
             // 
@@ -169,6 +194,7 @@
             this.btnDelete.Text = "删除";
             this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // imgListBtns
             // 
@@ -191,6 +217,7 @@
             this.btnUpdate.Text = "修改";
             this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnSava
             // 
@@ -204,55 +231,8 @@
             this.btnSava.TabIndex = 0;
             this.btnSava.Text = "添加";
             this.btnSava.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSava.UseVisualStyleBackColor = true;
+            this.btnSava.UseVisualStyleBackColor = false;
             this.btnSava.Click += new System.EventHandler(this.btnSava_Click);
-            // 
-            // txbKey
-            // 
-            this.txbKey.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txbKey.Location = new System.Drawing.Point(0, 87);
-            this.txbKey.Name = "txbKey";
-            this.txbKey.Size = new System.Drawing.Size(636, 21);
-            this.txbKey.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 67);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(636, 20);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "全局参数键：";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Location = new System.Drawing.Point(0, 108);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(636, 20);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "全局参数值(Json)：";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "注意事项：";
-            // 
-            // label4
-            // 
-            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label4.Location = new System.Drawing.Point(0, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(291, 20);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "全部参数：";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmMainPanel
             // 
@@ -275,8 +255,6 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -288,19 +266,17 @@
         private System.Windows.Forms.TabPage tabPageStartUp;
         private System.Windows.Forms.TabPage tabPageConfigurationCenter;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListView listKey;
         private System.Windows.Forms.TextBox txbValue;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSava;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ImageList imgListBtns;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txbKey;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox listKV;
     }
 }
 
