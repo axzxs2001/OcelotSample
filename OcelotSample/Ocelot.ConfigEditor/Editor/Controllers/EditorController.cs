@@ -231,12 +231,12 @@ namespace Ocelot.ConfigEditor.Editor.Controllers
                 foreach (var action in actions)
                 {
                     var routes = _fileConfigRepo.Get().GetAwaiter().GetResult();
-                    var oldRoute = routes.Data.ReRoutes.FirstOrDefault(r => action.ActionName == r.DownstreamPathTemplate && action.ActionName == r.DownstreamScheme && host == r.DownstreamHost && port == r.DownstreamPort && action.ActionName == r.UpstreamPathTemplate);
+                    var oldRoute = routes.Data.ReRoutes.FirstOrDefault(r => action.ActionName == r.DownstreamPathTemplate && action.ActionName == r.DownstreamScheme && host == r.DownstreamHostAndPorts[0].Host && port == r.DownstreamHostAndPorts[0].Port && action.ActionName == r.UpstreamPathTemplate);
                     if (oldRoute != null)
                     {
                         routes.Data.ReRoutes.Remove(oldRoute);
                     }
-                    var newRoute = new FileReRoute { DownstreamPathTemplate = action.ActionName, UpstreamPathTemplate = action.ActionName, DownstreamHost = host, DownstreamPort = port, DownstreamScheme = "http", UpstreamHttpMethod = new List<string>(action.Predicates), AuthenticationOptions = new FileAuthenticationOptions { AuthenticationProviderKey = action.IsAuthzation ? jwtkey : "" } };
+                    var newRoute = new FileReRoute { DownstreamPathTemplate = action.ActionName, UpstreamPathTemplate = action.ActionName,  DownstreamHostAndPorts =new List<FileHostAndPort> { new FileHostAndPort { Host = host, Port = port } }, DownstreamScheme = "http", UpstreamHttpMethod = new List<string>(action.Predicates), AuthenticationOptions = new FileAuthenticationOptions { AuthenticationProviderKey = action.IsAuthzation ? jwtkey : "" } };
 
                     routes.Data.ReRoutes.Add(newRoute);
                     _fileConfigRepo.Set(routes.Data);

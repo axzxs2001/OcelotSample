@@ -65,12 +65,12 @@ namespace OcelotGateway
                 services.AddMetricsEndpoints();
 
                 //健康监控相关
-                //var healthmetrics = AppMetricsHealth.CreateDefaultBuilder()
-                //    .HealthChecks.AddProcessPhysicalMemoryCheck("process", (2048L * 1024L) * 1024L)
-                //    .HealthChecks.AddPingCheck("ping", "baidu.com", TimeSpan.FromSeconds(5))
-                //    .Build();
-                //services.AddHealth(healthmetrics);
-                //services.AddHealthEndpoints();
+                var healthmetrics = AppMetricsHealth.CreateDefaultBuilder()
+                    .HealthChecks.AddProcessPhysicalMemoryCheck("process", (2048L * 1024L) * 1024L)
+                    .HealthChecks.AddPingCheck("ping", "baidu.com", TimeSpan.FromSeconds(5))
+                    .Build();
+                services.AddHealth(healthmetrics);
+                services.AddHealthEndpoints();
             }
 
             #endregion
@@ -95,9 +95,9 @@ namespace OcelotGateway
                 app.UseMetricsAllEndpoints();
 
                 //健康监控相关
-                //app.UseHealthAllEndpoints();
-                //app.UsePingEndpoint();
-                //app.UseHealthEndpoint();        
+                app.UseHealthAllEndpoints();
+                app.UsePingEndpoint();
+                app.UseHealthEndpoint();
             }
             #endregion
             app.UseStaticFiles();

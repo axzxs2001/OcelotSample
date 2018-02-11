@@ -3,13 +3,18 @@
     {
       "DownstreamPathTemplate": "/lisapi/lisuser",
       "DownstreamScheme": "http",
-      "DownstreamHost": "localhost",
-      "DownstreamPort": 5002,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+
+      ],  
       "UpstreamPathTemplate": "/lisapi/lisuser",
       "UpstreamHttpMethod": [ "Get", "Post" ],
-      //"ServiceName": "lisapi",
-      //"LoadBalancer": "RoundRobin",
-      //"UseServiceDiscovery": true,
+      "ServiceName": "lisapi",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
       "ReRouteIsCaseSensitive": false,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -28,8 +33,12 @@
     {
       "DownstreamPathTemplate": "/index.html",
       "DownstreamScheme": "http",
-      "DownstreamHost": "localhost",
-      "DownstreamPort": 5002,
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
       "UpstreamPathTemplate": "/index.html",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "ServiceName": "lisapi",
@@ -53,13 +62,17 @@
     {
       "DownstreamPathTemplate": "/lisapi/denied",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5002,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
       "UpstreamPathTemplate": "/lisapi/denied",
       "UpstreamHttpMethod": [ "Get" ],
-      //"ServiceName": "lisapi",
-      //"LoadBalancer": "LeastConnection",
-      //"UseServiceDiscovery": true,
+      "ServiceName": "lisapi",
+      "LoadBalancer": "LeastConnection",
+      "UseServiceDiscovery": true,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
@@ -71,8 +84,12 @@
     {
       "DownstreamPathTemplate": "/",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5002,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
       "UpstreamPathTemplate": "/",
       "UpstreamHttpMethod": [ "Get" ],
       "ServiceName": "lisapi",
@@ -89,8 +106,12 @@
     {
       "DownstreamPathTemplate": "/docs/",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5002,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
       "UpstreamPathTemplate": "/lisapi/docs/",
       "UpstreamHttpMethod": [ "Get" ],
       "ServiceName": "lisapi",
@@ -105,8 +126,12 @@
     {
       "DownstreamPathTemplate": "/hisapi/hisuser",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5001,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
       "UpstreamPathTemplate": "/hisapi/hisuser",
       "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
@@ -126,8 +151,12 @@
     {
       "DownstreamPathTemplate": "/hisapi/getfeeitems",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5001,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
       "UpstreamPathTemplate": "/hisapi/getfeeitems",
       "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
@@ -147,8 +176,12 @@
     {
       "DownstreamPathTemplate": "/hisapi/denied",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5001,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
       "UpstreamPathTemplate": "/hisapi/denied",
       "UpstreamHttpMethod": [ "Get" ],
       "QoSOptions": {
@@ -162,8 +195,12 @@
     {
       "DownstreamPathTemplate": "/authapi/login",
       "DownstreamScheme": "http",
-      "DownstreamPort": 5003,
-      "DownstreamHost": "localhost",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
       "UpstreamPathTemplate": "/authapi/login",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "QoSOptions": {
@@ -175,10 +212,10 @@
       }
     }
   ],
-  //"GlobalConfiguration": {
-  //  "ServiceDiscoveryProvider": {
-  //    "Host": "localhost",
-  //    "Port": 8500
-  //  }
-  //}
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500
+    }
+  }
 }

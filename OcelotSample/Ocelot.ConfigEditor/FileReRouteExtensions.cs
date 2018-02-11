@@ -8,7 +8,7 @@ namespace Ocelot.ConfigEditor
         {
             return fileReRoute == null
                        ? string.Empty
-                       : $"{fileReRoute.DownstreamScheme}{fileReRoute.DownstreamHost}{fileReRoute.DownstreamPort}{fileReRoute.DownstreamPathTemplate}"
+                       : $"{fileReRoute.DownstreamScheme}{fileReRoute.DownstreamHostAndPorts[0].Host}:{fileReRoute.DownstreamHostAndPorts[0].Port}{fileReRoute.DownstreamPathTemplate}"
                            .Replace('/', '_');
         }
     }
