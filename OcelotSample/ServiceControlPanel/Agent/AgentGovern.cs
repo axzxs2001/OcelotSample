@@ -98,18 +98,18 @@ namespace ServiceControlPanel.Agent
         /// </summary>
         /// <returns></returns>
         /// <param name="registerServiceParmeter">Register Service Parmeter</param>
-        public bool RegisterServices(RegisterServiceParmeter registerServiceParmeter)
+        public string RegisterServices(RegisterServiceParmeter registerServiceParmeter)
         {
-            return Put<RegisterServiceParmeter, bool>($"/agent/service/register", registerServiceParmeter);
+            return Put<RegisterServiceParmeter, string>($"/agent/service/register", registerServiceParmeter);
         }
         /// <summary>
         /// This endpoint removes a service from the local agent. If the service does not exist, no action is taken.The agent will take care of deregistering the service with the catalog.If there is an associated check, that is also deregistered.
         /// </summary>
         /// <returns></returns>
         /// <param name="deregisterCheckParmeter">Deregister Check Parmeter</param>
-        public bool DeregisterServices(string serviceID)
+        public string DeregisterServices(string serviceID)
         {
-            return Put<bool>($"/agent/service/deregister/{serviceID}");
+            return Put<string>($"/agent/service/deregister/{serviceID}");
         }
         #endregion
 

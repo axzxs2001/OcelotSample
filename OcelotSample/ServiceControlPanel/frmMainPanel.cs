@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using ServiceControlPanel.Agent;
+using ServiceControlPanel.Agent.Check;
+using ServiceControlPanel.Health;
 using ServiceControlPanel.KV;
 using System;
 using System.Collections.Generic;
@@ -296,9 +299,146 @@ namespace ServiceControlPanel
             txbKey.Text = listKV.Text;
         }
 
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void btnServiceQuery_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                gridService.DataSource = agentGovern.ListServices().Values.ToList();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
 
+        private void gridService_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex > -1)
+                {
+                    var service = gridService.Rows[e.RowIndex].Cells["service"].Value.ToString();
+                    var healthGovern = new HealthGovern();
+                    gridCheck.DataSource = healthGovern.ListChecksForService(new CheckServiceParmeter { DC = "dc1", Service = service });
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnServiceAdd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                var result = agentGovern.RegisterServices(new Agent.Service.RegisterServiceParmeter
+                {
+                    ID = txbServiceID.Text,
+                    Name = txbSeviceName.Text,
+                    Address = txbServiceIP.Text,
+                    Port = Convert.ToInt32(txbServicePort.Text),
+                    Tags = txbServiceTag.Text.Split(','),
+                    EnableTagOverride = false
+                });
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnServiceDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                var result = agentGovern.DeregisterServices(gridService.SelectedRows[0].Cells["id"].Value.ToString());
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnServiceModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                var result = agentGovern.RegisterServices(new Agent.Service.RegisterServiceParmeter
+                {
+                    ID = txbServiceID.Text,
+                    Name = txbSeviceName.Text,
+                    Address = txbServiceIP.Text,
+                    Port = Convert.ToInt32(txbServicePort.Text),
+                    Tags = txbServiceTag.Text.Split(','),
+                    EnableTagOverride = false
+                });
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnCheckAdd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                gridCheck.DataSource = agentGovern.RegisterCheck(new RegisterCheckParmeter
+                {
+                    ID = txbCheckID.Text,
+                    Name = txbCheckName.Text,
+                    HTTP = txbCheckHttp.Text,
+                    Interval = txbCheckInterval.Text,
+                    Method = comCheckMethod.Text,
+                    ServiceID = gridService.SelectedRows[0].Cells["id"].Value.ToString(),
+                    TLSSkipVerify = false
+                });
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnCheckModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                gridCheck.DataSource = agentGovern.RegisterCheck(new RegisterCheckParmeter
+                {
+                    ID = txbCheckID.Text,
+                    Name = txbCheckName.Text,
+                    HTTP = txbCheckHttp.Text,
+                    Interval = txbCheckInterval.Text,
+                    Method = comCheckMethod.Text,
+                    ServiceID = gridService.SelectedRows[0].Cells["id"].Value.ToString(),
+                    TLSSkipVerify = false
+                });
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void btnCheckDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                gridCheck.DataSource = agentGovern.DeregisterCheck(gridCheck.SelectedRows[0].Cells["id"].Value.ToString());
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
     }
 

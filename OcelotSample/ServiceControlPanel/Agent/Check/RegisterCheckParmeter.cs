@@ -66,7 +66,7 @@ namespace ServiceControlPanel.Agent.Check
         /// <summary>
         /// Specifies if the certificate for an HTTPS check should not be verified.
         /// </summary>
-        public string TLSSkipVerify { get; set; }
+        public bool TLSSkipVerify { get; set; }
 
         /// <summary>
         /// Specifies the ID of a service to associate the registered check with an existing service provided by the agent.

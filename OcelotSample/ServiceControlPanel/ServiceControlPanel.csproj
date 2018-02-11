@@ -88,6 +88,12 @@
     <Compile Include="frmMainPanel.Designer.cs">
       <DependentUpon>frmMainPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Health\BaseCheckNodeResult.cs" />
+    <Compile Include="Health\CheckNodeResult.cs" />
+    <Compile Include="Health\CheckServiceParmeter.cs" />
+    <Compile Include="Health\HealthGovern.cs" />
+    <Compile Include="Health\HealthService.cs" />
+    <Compile Include="Health\ListChecksInStateParmeter.cs" />
     <Compile Include="KV\CreateUpdateKeyParmeter.cs" />
     <Compile Include="KV\DeleteKeyParmter.cs" />
     <Compile Include="KV\KVGovern.cs" />
@@ -112,6 +118,47 @@
     <None Include="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="consul\conf\service.json" />
+    <None Include="consul\conf\watchs.json" />
+    <None Include="consul\conf\xacl.json" />
+    <None Include="consul\consuldocker\config\service.json" />
+    <None Include="consul\consuldocker\consul\config\service.json" />
+    <None Include="consul\consuldocker\consul\config\watchs.json" />
+    <None Include="consul\consuldocker\consul\config\xacl.json" />
+    <None Include="consul\consuldocker\consul\data\checkpoint-signature" />
+    <None Include="consul\consuldocker\consul\data\node-id" />
+    <None Include="consul\consuldocker\consul\data\raft\peers.info" />
+    <None Include="consul\consuldocker\consul\data\raft\raft.db" />
+    <None Include="consul\consuldocker\consul\data\serf\local.snapshot" />
+    <None Include="consul\consuldocker\consul\data\serf\remote.snapshot" />
+    <None Include="consul\consuldocker\docker-entrypoint.sh" />
+    <None Include="consul\consuldocker\Dockerfile" />
+    <None Include="consul\data\checkpoint-signature" />
+    <None Include="consul\data\node-id" />
+    <None Include="consul\data\raft\peers.info" />
+    <None Include="consul\data\raft\raft.db" />
+    <None Include="consul\data\raft\raft.db.lock" />
+    <None Include="consul\data\serf\local.keyring" />
+    <None Include="consul\data\serf\local.snapshot" />
+    <None Include="consul\data\serf\remote.keyring" />
+    <None Include="consul\data\serf\remote.snapshot" />
+    <None Include="consul\dist\Gemfile" />
+    <None Include="consul\dist\Gemfile.lock" />
+    <None Include="consul\dist\GNUmakefile" />
+    <None Include="consul\dist\README.md" />
+    <None Include="consul\dist\scripts\compile.rb" />
+    <None Include="consul\dist\scripts\dist.sh" />
+    <None Include="consul\dist\static\base.css.map" />
+    <None Include="consul\dist\styles\base.scss" />
+    <None Include="consul\dist\styles\_buttons.scss" />
+    <None Include="consul\dist\styles\_forms.scss" />
+    <None Include="consul\dist\styles\_lists.scss" />
+    <None Include="consul\dist\styles\_mixins.scss" />
+    <None Include="consul\dist\styles\_nav.scss" />
+    <None Include="consul\dist\styles\_notifications.scss" />
+    <None Include="consul\dist\styles\_panels.scss" />
+    <None Include="consul\dist\styles\_type.scss" />
+    <None Include="consul\dist\styles\_variables.scss" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -127,6 +174,61 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="consul\consul.exe" />
+    <Content Include="consul\consuldocker\Readme.txt" />
+    <Content Include="consul\dist\index.html" />
+    <Content Include="consul\dist\javascripts\app\controllers.js" />
+    <Content Include="consul\dist\javascripts\app\helpers.js" />
+    <Content Include="consul\dist\javascripts\app\mixins.js" />
+    <Content Include="consul\dist\javascripts\app\models.js" />
+    <Content Include="consul\dist\javascripts\app\router.js" />
+    <Content Include="consul\dist\javascripts\app\routes.js" />
+    <Content Include="consul\dist\javascripts\app\views.js" />
+    <Content Include="consul\dist\javascripts\fixtures.js" />
+    <Content Include="consul\dist\javascripts\libs\base64.min.js" />
+    <Content Include="consul\dist\javascripts\libs\classie.js" />
+    <Content Include="consul\dist\javascripts\libs\classie.min.js" />
+    <Content Include="consul\dist\javascripts\libs\ember-debug.min.js" />
+    <Content Include="consul\dist\javascripts\libs\ember-validations.min.js" />
+    <Content Include="consul\dist\javascripts\libs\ember.min.js" />
+    <Content Include="consul\dist\javascripts\libs\handlebars-1.3.0.min.js" />
+    <Content Include="consul\dist\javascripts\libs\jquery-1.10.2.min.js" />
+    <Content Include="consul\dist\javascripts\libs\list-view.min.js" />
+    <Content Include="consul\dist\javascripts\libs\notificationFx.js" />
+    <Content Include="consul\dist\static\android-chrome-192x192.png" />
+    <Content Include="consul\dist\static\android-chrome-512x512.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-114x114.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-120x120.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-144x144.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-152x152.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-57x57.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-60x60.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-72x72.png" />
+    <Content Include="consul\dist\static\apple-touch-icon-76x76.png" />
+    <Content Include="consul\dist\static\apple-touch-icon.png" />
+    <Content Include="consul\dist\static\base.css" />
+    <Content Include="consul\dist\static\bootstrap.min.css" />
+    <Content Include="consul\dist\static\consul-logo.png" />
+    <Content Include="consul\dist\static\favicon-128.png" />
+    <Content Include="consul\dist\static\favicon-16x16.png" />
+    <Content Include="consul\dist\static\favicon-196x196.png" />
+    <Content Include="consul\dist\static\favicon-32x32.png" />
+    <Content Include="consul\dist\static\favicon-96x96.png" />
+    <Content Include="consul\dist\static\favicon.ico" />
+    <Content Include="consul\dist\static\favicon.png" />
+    <Content Include="consul\dist\static\loading-cylon-pink.svg" />
+    <Content Include="consul\dist\static\mstile-144x144.png" />
+    <Content Include="consul\dist\static\mstile-150x150.png" />
+    <Content Include="consul\dist\static\mstile-310x150.png" />
+    <Content Include="consul\dist\static\mstile-310x310.png" />
+    <Content Include="consul\dist\static\mstile-70x70.png" />
+    <Content Include="consul\dist\static\safari-pinned-tab.svg" />
+    <Content Include="consul\dist\style-guide.html" />
+    <Content Include="consul\dist\tests\runner.css" />
+    <Content Include="consul\dist\tests\runner.js" />
+    <Content Include="consul\dist\tests\tests.js" />
+    <Content Include="consul\dist\tests\vendor\qunit-1.12.0.css" />
+    <Content Include="consul\dist\tests\vendor\qunit-1.12.0.js" />
     <Content Include="images\Add.png" />
     <Content Include="images\All.png" />
     <Content Include="images\All80.png" />
@@ -146,6 +248,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="cmd\" />
+    <Folder Include="consul\consuldocker\consul\data\raft\snapshots\" />
+    <Folder Include="consul\data\raft\snapshots\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
