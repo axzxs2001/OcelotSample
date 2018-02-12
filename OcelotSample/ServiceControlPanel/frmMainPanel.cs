@@ -3,6 +3,7 @@ using ServiceControlPanel.Agent;
 using ServiceControlPanel.Agent.Check;
 using ServiceControlPanel.Health;
 using ServiceControlPanel.KV;
+using ServiceControlPanel.Raft;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,10 +33,12 @@ namespace ServiceControlPanel
         {
             _proDic = new Dictionary<string, Process>();
             LoadButton();
-
             LoadConfig();
+            LoadRaft();
         }
-
+        /// <summary>
+        /// 加载配置文件
+        /// </summary>
         private void LoadConfig()
         {
             try
@@ -439,6 +442,25 @@ namespace ServiceControlPanel
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private void btnInsertCluster_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var agentGovern = new AgentGovern();
+                agentGovern.JoinAgent(new JoinAgentParmeter { Address = txbClusterIP.Text, Wan = true });
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+        private void LoadRaft()
+        {
+            var raftGovern = new OperatorRaftGovern();
+            gridRaft.DataSource = raftGovern.ReadConfiguration(new ReadConfigurationParmeter { DC = "dc1" })?.Servers;
+
         }
     }
 

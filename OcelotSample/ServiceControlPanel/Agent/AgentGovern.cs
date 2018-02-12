@@ -47,9 +47,9 @@ namespace ServiceControlPanel.Agent
         /// </summary>
         /// <param name="joinAgentParmeter">Join Agent Parmeter</param>
         /// <returns></returns>    
-        public bool JoinAgent(JoinAgentParmeter joinAgentParmeter)
+        public string JoinAgent(JoinAgentParmeter joinAgentParmeter)
         {
-            return Put<JoinAgentParmeter, bool>($"/agent/join", joinAgentParmeter);
+            return Put<JoinAgentParmeter, string>($"/agent/join/{joinAgentParmeter.Address}", joinAgentParmeter);
         }
 
         #endregion

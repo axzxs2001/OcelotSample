@@ -83,9 +83,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageCluster = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txbClusterIP = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.btnInsertCluster = new System.Windows.Forms.Button();
+            this.gridRaft = new System.Windows.Forms.DataGridView();
             this.tabC.SuspendLayout();
             this.tabPageConfigCenter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -104,6 +105,7 @@
             this.panel2.SuspendLayout();
             this.tabPageCluster.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridRaft)).BeginInit();
             this.SuspendLayout();
             // 
             // tabC
@@ -684,6 +686,7 @@
             // 
             // tabPageCluster
             // 
+            this.tabPageCluster.Controls.Add(this.gridRaft);
             this.tabPageCluster.Controls.Add(this.panel4);
             this.tabPageCluster.Location = new System.Drawing.Point(22, 4);
             this.tabPageCluster.Name = "tabPageCluster";
@@ -696,19 +699,19 @@
             // 
             this.panel4.Controls.Add(this.btnInsertCluster);
             this.panel4.Controls.Add(this.label15);
-            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.txbClusterIP);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(933, 42);
             this.panel4.TabIndex = 0;
             // 
-            // textBox1
+            // txbClusterIP
             // 
-            this.textBox1.Location = new System.Drawing.Point(92, 9);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(455, 21);
-            this.textBox1.TabIndex = 0;
+            this.txbClusterIP.Location = new System.Drawing.Point(92, 9);
+            this.txbClusterIP.Name = "txbClusterIP";
+            this.txbClusterIP.Size = new System.Drawing.Size(455, 21);
+            this.txbClusterIP.TabIndex = 0;
             // 
             // label15
             // 
@@ -732,6 +735,21 @@
             this.btnInsertCluster.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnInsertCluster.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInsertCluster.UseVisualStyleBackColor = false;
+            this.btnInsertCluster.Click += new System.EventHandler(this.btnInsertCluster_Click);
+            // 
+            // gridRaft
+            // 
+            this.gridRaft.AllowUserToAddRows = false;
+            this.gridRaft.AllowUserToDeleteRows = false;
+            this.gridRaft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridRaft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridRaft.Location = new System.Drawing.Point(0, 42);
+            this.gridRaft.Name = "gridRaft";
+            this.gridRaft.ReadOnly = true;
+            this.gridRaft.RowTemplate.Height = 23;
+            this.gridRaft.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridRaft.Size = new System.Drawing.Size(933, 532);
+            this.gridRaft.TabIndex = 5;
             // 
             // frmMainPanel
             // 
@@ -769,6 +787,7 @@
             this.tabPageCluster.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridRaft)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -830,7 +849,8 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnInsertCluster;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txbClusterIP;
+        private System.Windows.Forms.DataGridView gridRaft;
     }
 }
 

@@ -102,6 +102,10 @@
     <Compile Include="ProcessExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Raft\OperatorRaftGovern.cs" />
+    <Compile Include="Raft\ReadConfigurationParmeter.cs" />
+    <Compile Include="Raft\ReadConfigurationResult.cs" />
+    <Compile Include="Raft\Server.cs" />
     <EmbeddedResource Include="frmMainPanel.resx">
       <DependentUpon>frmMainPanel.cs</DependentUpon>
     </EmbeddedResource>
