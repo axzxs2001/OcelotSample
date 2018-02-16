@@ -12,9 +12,9 @@
       ],
       "UpstreamPathTemplate": "/lisapi/lisuser",
       "UpstreamHttpMethod": [ "Get", "Post" ],
-      "ServiceName": "lisapi",
-      "LoadBalancer": "RoundRobin",
-      "UseServiceDiscovery": true,
+      //"ServiceName": "lisapi",
+      //"LoadBalancer": "RoundRobin",
+      //"UseServiceDiscovery": true,
       "ReRouteIsCaseSensitive": false,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
@@ -23,7 +23,8 @@
       },
       "HttpHandlerOptions": {
         "AllowAutoRedirect": false,
-        "UseCookieContainer": false
+        "UseCookieContainer": false,
+        "UseTracing": true
       },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GSWBearer",
@@ -196,6 +197,11 @@
         "DurationOfBreak": 10,
         "TimeoutValue": 5000
       },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": true
+      },
       "AuthenticationOptions": {
       }
     },
@@ -228,6 +234,8 @@
       "ClientIdHeader": "client_id",
       "QuotaExceededMessage": "访问受限",
       "DisableRateLimitHeaders": false
-    }
+    },
+    "RequestIdKey":"ot-traceid"
+  
   }
 }

@@ -11,7 +11,7 @@ using Ocelot.ConfigEditor;
 
 using App.Metrics.Health;
 using System.Reflection;
-
+using Butterfly.Client.AspNetCore;
 
 namespace OcelotGateway
 {
@@ -25,6 +25,12 @@ namespace OcelotGateway
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "my service";
+            });
 
             #region Metrics监控配置
             string IsOpen = Configuration.GetSection("InfluxDB:IsOpen").Value.ToLower();

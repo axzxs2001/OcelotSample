@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Common;
 using ConsulSharp.KV;
 using Microsoft.Extensions.Configuration;
+using System.Net.Http;
 
 namespace LisAPI.Controllers
 {
@@ -28,7 +29,10 @@ namespace LisAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            var httpClient = new HttpClient();
 
+            var con= httpClient.GetStringAsync("http://localhost:5000/hisapi/denied").GetAwaiter().GetResult();
+            Console.WriteLine(con);
             return new string[] { "Lis用户服务"+DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss"), "所在服务器："+ Environment.MachineName +" OS:"+Environment.OSVersion.VersionString};
         }
 
