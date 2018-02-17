@@ -26,11 +26,7 @@ namespace OcelotGateway
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddButterfly(option =>
-            {
-                option.CollectorUrl = "http://localhost:9618";
-                option.Service = "gateway";
-            });
+           
 
             #region Metrics监控配置
             string IsOpen = Configuration.GetSection("InfluxDB:IsOpen").Value.ToLower();
@@ -86,7 +82,11 @@ namespace OcelotGateway
             services.AddOcelotJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer");
 
             //注入Ocelot
-            services.AddOcelot(Configuration as ConfigurationRoot);//.AddStoreOcelotConfigurationInConsul();
+            services.AddOcelot(Configuration as ConfigurationRoot).AddOpenTracing(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "gateway";
+            }); ;//.AddStoreOcelotConfigurationInConsul();
             services.AddOcelotConfigEditor();
         }
 

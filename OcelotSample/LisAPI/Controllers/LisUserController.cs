@@ -93,10 +93,11 @@ namespace LisAPI.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("/lisapi/denied")]
-        public IActionResult Denied([FromServices] HttpClient httpClient)
+        public IActionResult Denied([FromServices]HttpClient httpClient)
         {
             try
             {
+               // HttpClient httpClient = new HttpClient();
                 var con = httpClient.GetStringAsync("http://localhost:5000/hisapi/denied").GetAwaiter().GetResult();
                 Console.WriteLine(con);
 

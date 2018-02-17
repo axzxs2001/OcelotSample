@@ -26,11 +26,6 @@ namespace HisAPI
         {
 
 
-            services.AddButterfly(option =>
-            {
-                option.CollectorUrl = "http://localhost:9618";
-                option.Service = "hisapi";
-            });
 
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
@@ -51,6 +46,11 @@ namespace HisAPI
             services.AddScoped<IDapperPlusDB, DapperPlusDB>();
             services.AddScoped<IFeeItemRepository, FeeItemRepository>();
             services.AddMvc();
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "hisapi";
+            });
         }
 
 

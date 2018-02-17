@@ -87,9 +87,7 @@
         "TimeoutValue": 5000
       },
       "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
+        "UseTracing": true
       },
       "AuthenticationOptions": {
       }
@@ -204,9 +202,7 @@
         "TimeoutValue": 5000
       },
       "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
+        "UseTracing": true
       },
       "AuthenticationOptions": {
       }
@@ -240,8 +236,8 @@
       "ClientIdHeader": "client_id",
       "QuotaExceededMessage": "访问受限",
       "DisableRateLimitHeaders": false
-    },
-    "RequestIdKey":"ot-traceid"
+    }
+    //"RequestIdKey":"ot-traceid"
   
   }
 }
