@@ -29,7 +29,7 @@ namespace OcelotGateway
             services.AddButterfly(option =>
             {
                 option.CollectorUrl = "http://localhost:9618";
-                option.Service = "my service";
+                option.Service = "gateway";
             });
 
             #region Metrics监控配置

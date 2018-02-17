@@ -18,6 +18,9 @@ using Ocelot.JWTAuthorizePolicy;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
+using Butterfly.Client.AspNetCore;
+using System.Net.Http;
+using Butterfly.Client.Tracing;
 
 namespace LisAPI
 {
@@ -31,7 +34,10 @@ namespace LisAPI
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {     
+        {
+
+         
+
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
             services.AddOcelotPolicyJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer", "Permission", "no permission");
@@ -63,6 +69,13 @@ namespace LisAPI
                 c.IncludeXmlComments(filePath);
                 c.CustomSchemaIds((type) => type.FullName);
             });
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "lisapi";
+            });
+
+            services.AddSingleton<HttpClient>(p => new HttpClient(p.GetService<HttpTracingHandler>()));
         }
 
 

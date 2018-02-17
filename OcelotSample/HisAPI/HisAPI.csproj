@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Butterfly.Client.AspNetCore" Version="0.0.7" />
     <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="mailkit" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />

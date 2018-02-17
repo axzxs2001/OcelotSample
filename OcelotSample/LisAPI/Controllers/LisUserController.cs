@@ -28,11 +28,9 @@ namespace LisAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
-        {
-            var httpClient = new HttpClient();
+        {         
 
-            var con= httpClient.GetStringAsync("http://localhost:5000/hisapi/denied").GetAwaiter().GetResult();
-            Console.WriteLine(con);
+         
             return new string[] { "Lis用户服务"+DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss"), "所在服务器："+ Environment.MachineName +" OS:"+Environment.OSVersion.VersionString};
         }
 
@@ -95,10 +93,13 @@ namespace LisAPI.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("/lisapi/denied")]
-        public IActionResult Denied()
+        public IActionResult Denied([FromServices] HttpClient httpClient)
         {
             try
             {
+                var con = httpClient.GetStringAsync("http://localhost:5000/hisapi/denied").GetAwaiter().GetResult();
+                Console.WriteLine(con);
+
                 //var kvGovern = new KVGovern($"http://{_ip}:8500");
                 //var result = kvGovern.ReadKey(new ReadKeyParmeter { Key = "lisconnectionstring" }).GetAwaiter().GetResult();
                 return new JsonResult(new

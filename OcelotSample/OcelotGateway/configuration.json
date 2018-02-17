@@ -24,7 +24,7 @@
       "HttpHandlerOptions": {
         "AllowAutoRedirect": false,
         "UseCookieContainer": false,
-        "UseTracing": true
+        "UseTracing": false
       },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GSWBearer",
@@ -78,13 +78,18 @@
       ],
       "UpstreamPathTemplate": "/lisapi/denied",
       "UpstreamHttpMethod": [ "Get" ],
-      "ServiceName": "lisapi",
-      "LoadBalancer": "LeastConnection",
-      "UseServiceDiscovery": true,
+      //"ServiceName": "lisapi",
+      //"LoadBalancer": "LeastConnection",
+      //"UseServiceDiscovery": true,
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 10,
         "TimeoutValue": 5000
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false
       },
       "AuthenticationOptions": {
       }
@@ -108,6 +113,7 @@
         "DurationOfBreak": 10,
         "TimeoutValue": 5000
       },
+
       "AuthenticationOptions": {
       }
     },
@@ -200,7 +206,7 @@
       "HttpHandlerOptions": {
         "AllowAutoRedirect": false,
         "UseCookieContainer": false,
-        "UseTracing": true
+        "UseTracing": false
       },
       "AuthenticationOptions": {
       }
@@ -226,10 +232,10 @@
     }
   ],
   "GlobalConfiguration": {
-    "ServiceDiscoveryProvider": {
-      "Host": "localhost",
-      "Port": 8500
-    },
+    //"ServiceDiscoveryProvider": {
+    //  "Host": "localhost",
+    //  "Port": 8500
+    //},
     "RateLimitOptions": {
       "ClientIdHeader": "client_id",
       "QuotaExceededMessage": "访问受限",

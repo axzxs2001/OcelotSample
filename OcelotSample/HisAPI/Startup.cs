@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using HisAPI.Model.Repository;
 using DapperPlus;
+using Butterfly.Client.AspNetCore;
 
 namespace HisAPI
 {
@@ -23,6 +24,14 @@ namespace HisAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "hisapi";
+            });
+
             //读取配置文件
             var audienceConfig = Configuration.GetSection("Audience");
             services.AddOcelotPolicyJwtBearer(audienceConfig["Issuer"], audienceConfig["Issuer"], audienceConfig["Secret"], "GSWBearer", "Permission", "/hisapi/denied");
