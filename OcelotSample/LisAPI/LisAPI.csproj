@@ -24,4 +24,10 @@
     <ProjectReference Include="..\Ocelot.JWTAuthorizePolicy\Ocelot.JWTAuthorizePolicy.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
